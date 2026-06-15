@@ -4,7 +4,7 @@ info:
   description: API for managing World Cup football scores and league table
   version: "1.0.0"
 servers:
-  - url: http://localhost:5000
+  - url: http://localhost:6200
 paths:
   /scores:
     get:

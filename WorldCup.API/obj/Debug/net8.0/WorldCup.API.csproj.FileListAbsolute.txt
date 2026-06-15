@@ -17,7 +17,6 @@ C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\WorldCup.API.As
 C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\WorldCup.API.csproj.CoreCompileInputs.cache
 C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\WorldCup.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\WorldCup.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\WorldCup.API.sourcelink.json
 C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\dominick.crosbie\WorldCup\WorldCup.API\obj\Debug\net8.0\staticwebassets\msbuild.WorldCup.API.Microsoft.AspNetCore.StaticWebAssets.props

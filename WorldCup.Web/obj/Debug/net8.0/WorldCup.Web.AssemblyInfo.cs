@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WorldCup.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4322f2af984ac63b77f231956035a82a8b653cb6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8680d6dfeca67d0d888a45b791fd57a696055427")]
 [assembly: System.Reflection.AssemblyProductAttribute("WorldCup.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WorldCup.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

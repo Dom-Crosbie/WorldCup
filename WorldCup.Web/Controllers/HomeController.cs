@@ -10,7 +10,7 @@ public class HomeController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<HomeController> _logger;
-    private const string ApiBase = "http://localhost:5000";
+    private const string ApiBase = "http://localhost:6200";
 
     public HomeController(IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
     {
