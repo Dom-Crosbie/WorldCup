@@ -1,0 +1,167 @@
+﻿openapi: "3.0.0"
+info:
+  title: WorldCupScores API
+  description: API for managing World Cup football scores and league table
+  version: "1.0.0"
+servers:
+  - url: http://localhost:5000
+paths:
+  /scores:
+    get:
+      operationId: getAllScores
+      summary: Returns all match scores
+      responses:
+        "200":
+          description: A list of match scores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MatchScore"
+    post:
+      operationId: submitMatchResult
+      summary: Submit a new match result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [homeTeam, awayTeam, homeScore, awayScore, matchDate]
+              properties:
+                homeTeam:
+                  type: string
+                  example: England
+                awayTeam:
+                  type: string
+                  example: France
+                homeScore:
+                  type: integer
+                  minimum: 0
+                  maximum: 99
+                  example: 2
+                awayScore:
+                  type: integer
+                  minimum: 0
+                  maximum: 99
+                  example: 1
+                matchDate:
+                  type: string
+                  format: date-time
+                  example: "2022-11-21T18:00:00Z"
+      responses:
+        "201":
+          description: Match result created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatchScore"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /scores/{matchId}:
+    get:
+      operationId: getMatchScoreById
+      summary: Returns a specific match score by UUID
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: A specific match score
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatchScore"
+        "404":
+          description: Match not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /table:
+    get:
+      operationId: getLeagueTable
+      summary: Returns the current league standings sorted by points
+      responses:
+        "200":
+          description: A list of league standings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeagueEntry"
+components:
+  schemas:
+    MatchScore:
+      type: object
+      properties:
+        matchId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        homeTeam:
+          type: string
+          example: England
+        awayTeam:
+          type: string
+          example: France
+        homeScore:
+          type: integer
+          example: 2
+        awayScore:
+          type: integer
+          example: 1
+        matchDate:
+          type: string
+          format: date-time
+          example: "2022-11-21T18:00:00Z"
+        status:
+          type: string
+          enum: [Scheduled, InProgress, Completed]
+          example: Completed
+    LeagueEntry:
+      type: object
+      properties:
+        team:
+          type: string
+          example: Brazil
+        played:
+          type: integer
+          example: 5
+        won:
+          type: integer
+          example: 4
+        drawn:
+          type: integer
+          example: 1
+        lost:
+          type: integer
+          example: 0
+        goalsFor:
+          type: integer
+          example: 12
+        goalsAgainst:
+          type: integer
+          example: 3
+        goalDifference:
+          type: integer
+          example: 9
+        points:
+          type: integer
+          example: 12
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Match not found

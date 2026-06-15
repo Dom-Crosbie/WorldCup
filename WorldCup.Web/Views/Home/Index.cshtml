@@ -1,0 +1,107 @@
+@model WorldCup.Web.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "World Cup Scores";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null || Model.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@(TempData["Error"] ?? Model.ErrorMessage)</div>
+}
+
+<div class="row">
+    <!-- Submit Score -->
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">⚽ Submit Match Result</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="SubmitScore" method="post">
+                    <div class="mb-2">
+                        <label class="form-label">Home Team</label>
+                        <input name="HomeTeam" class="form-control" required placeholder="e.g. England" />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Home Score</label>
+                        <input name="HomeScore" type="number" min="0" max="99" value="0" class="form-control" required />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Away Team</label>
+                        <input name="AwayTeam" class="form-control" required placeholder="e.g. France" />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Away Score</label>
+                        <input name="AwayScore" type="number" min="0" max="99" value="0" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Match Date</label>
+                        <input name="MatchDate" type="datetime-local" class="form-control"
+                               value="@DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm")" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Result</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- League Table -->
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">🏆 World Cup Standings</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th>
+                            <th>GF</th><th>GA</th><th>GD</th><th>Pts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Table.Count; i++)
+                        {
+                            var entry = Model.Table[i];
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td><strong>@entry.Team</strong></td>
+                                <td>@entry.Played</td><td>@entry.Won</td><td>@entry.Drawn</td><td>@entry.Lost</td>
+                                <td>@entry.GoalsFor</td><td>@entry.GoalsAgainst</td>
+                                <td>@(entry.GoalDifference > 0 ? "+" : "")@entry.GoalDifference</td>
+                                <td><strong>@entry.Points</strong></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Matches -->
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">📋 Recent Results</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <thead><tr><th>Date</th><th>Home</th><th>Score</th><th>Away</th><th>Status</th></tr></thead>
+                    <tbody>
+                        @foreach (var match in Model.RecentMatches)
+                        {
+                            <tr>
+                                <td>@match.MatchDate.ToString("dd MMM")</td>
+                                <td>@match.HomeTeam</td>
+                                <td class="text-center fw-bold">@match.HomeScore – @match.AwayScore</td>
+                                <td>@match.AwayTeam</td>
+                                <td><span class="badge bg-@(match.Status == "Completed" ? "success" : "warning")">@match.Status</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

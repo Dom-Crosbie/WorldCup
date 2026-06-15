@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\WorldCup.API.props" />
+</Project>
