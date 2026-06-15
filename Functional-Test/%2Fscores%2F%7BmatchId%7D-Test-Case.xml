@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="6d89d2a5-9869-40b8-b8fc-d3ee9c223688" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/scores/{matchId} Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/scores/{matchId}] located at [/scores/{matchId}]</con:description>
+  <con:settings>
+    <con:setting id="6d89d2a5-9869-40b8-b8fc-d3ee9c223688fileName">%2Fscores%2F%7BmatchId%7D-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="69833414-f454-45e5-897e-72021a91fe7f">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores/{matchId}" methodName="getMatchScoreById" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="0fb7a890-c3ba-4eb9-b1aa-75813522bc3e" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

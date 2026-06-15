@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="407b9f47-6432-4f4b-80c6-7d2169fd4abf" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/scores Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/scores] located at [/scores]</con:description>
+  <con:settings>
+    <con:setting id="407b9f47-6432-4f4b-80c6-7d2169fd4abffileName">%2Fscores-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="2a6925ae-40fc-42d4-9f56-b50f3bb78f5e">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="getAllScores" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="304c186b-7fbc-4ee0-ae47-0caf1a0da0cc" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 1 2" id="6603258b-6e44-48f3-b77f-af9fdcf4e07c">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="submitMatchResult" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1 2" id="6b5724fa-68f9-4783-96e0-18c60132da81" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{\r
+  "homeTeam" : "England",\r
+  "awayTeam" : "France",\r
+  "homeScore" : 2,\r
+  "awayScore" : 1,\r
+  "matchDate" : "2022-11-21T18:00Z"\r
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" name="/scores/{matchId}" path="/scores/{matchId}" id="dae108b6-c529-42a6-8572-7f85c85ccbb7">
+  <con:settings>
+    <con:setting id="dae108b6-c529-42a6-8572-7f85c85ccbb7fileName">%2Fscores%2F%7BmatchId%7D</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="getMatchScoreById" id="be155f5d-b47c-40ca-8938-a60a85fad564" method="GET">
+    <con:description>Returns a specific match score by UUID</con:description>
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>matchId</con:name>
+        <con:style>TEMPLATE</con:style>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>A specific match score</con:description>
+      <con:sampleContent>{
+  "matchId" : "123e4567-e89b-12d3-a456-426614174000",
+  "homeTeam" : "England",
+  "awayTeam" : "France",
+  "homeScore" : 2,
+  "awayScore" : 1,
+  "matchDate" : "2022-11-21T18:00Z",
+  "status" : "Completed"
+}</con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>404</con:status>
+      <con:params/>
+      <con:description>Match not found</con:description>
+      <con:sampleContent>{
+  "message" : "Match not found"
+}</con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="0fb7a890-c3ba-4eb9-b1aa-75813522bc3e" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://localhost:6200</con:endpoint>
+      <con:parameters/>
+    </con:request>
+  </con:method>
+</con:resource>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" name="/table" path="/table" id="84a1ea58-f8eb-42bc-8901-1d6f57b0032b">
+  <con:settings>
+    <con:setting id="84a1ea58-f8eb-42bc-8901-1d6f57b0032bfileName">%2Ftable</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="getLeagueTable" id="11ab6d92-fb72-44eb-865c-692a14faa0ba" method="GET">
+    <con:description>Returns the current league standings table</con:description>
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>A list of league standings</con:description>
+      <con:sampleContent>[ {
+  "team" : "Brazil",
+  "played" : 5,
+  "won" : 4,
+  "drawn" : 1,
+  "lost" : 0,
+  "goalsFor" : 12,
+  "goalsAgainst" : 3,
+  "goalDifference" : 9,
+  "points" : 12
+} ]</con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="96634fc0-a35d-4a67-a073-629a787f2f64" mediaType="application/json">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:endpoint>http://localhost:6200</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+    </con:request>
+  </con:method>
+</con:resource>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" name="/scores" path="/scores" id="378676ff-946e-4072-9f85-7141e43e5eb3">
+  <con:settings>
+    <con:setting id="378676ff-946e-4072-9f85-7141e43e5eb3fileName">%2Fscores</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="getAllScores" id="42937524-5671-4b1a-86c0-77f668d59356" method="GET">
+    <con:description>Returns all match scores</con:description>
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>A list of match scores</con:description>
+      <con:sampleContent>[ {
+  "matchId" : "123e4567-e89b-12d3-a456-426614174000",
+  "homeTeam" : "England",
+  "awayTeam" : "France",
+  "homeScore" : 2,
+  "awayScore" : 1,
+  "matchDate" : "2022-11-21T18:00Z",
+  "status" : "Completed"
+} ]</con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="304c186b-7fbc-4ee0-ae47-0caf1a0da0cc" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://localhost:6200</con:endpoint>
+      <con:parameters/>
+    </con:request>
+  </con:method>
+  <con:method name="submitMatchResult" id="f593355b-ba45-44fd-a9f3-e85c2b4118fb" method="POST">
+    <con:description>Submit a new match result</con:description>
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>201</con:status>
+      <con:params/>
+      <con:description>Match result created successfully</con:description>
+      <con:sampleContent>{
+  "matchId" : "123e4567-e89b-12d3-a456-426614174000",
+  "homeTeam" : "England",
+  "awayTeam" : "France",
+  "homeScore" : 2,
+  "awayScore" : 1,
+  "matchDate" : "2022-11-21T18:00Z",
+  "status" : "Completed"
+}</con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>400</con:status>
+      <con:params/>
+      <con:description>Validation error</con:description>
+      <con:sampleContent>{
+  "message" : "Match not found"
+}</con:sampleContent>
+    </con:representation>
+    <con:representation type="REQUEST">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+      <con:sampleContent>{
+  "homeTeam" : "England",
+  "awayTeam" : "France",
+  "homeScore" : 2,
+  "awayScore" : 1,
+  "matchDate" : "2022-11-21T18:00Z"
+}</con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="6b5724fa-68f9-4783-96e0-18c60132da81" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://localhost:6200</con:endpoint>
+      <con:request>{\r
+  "homeTeam" : "England",\r
+  "awayTeam" : "France",\r
+  "homeScore" : 2,\r
+  "awayScore" : 1,\r
+  "matchDate" : "2022-11-21T18:00Z"\r
+}</con:request>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+    </con:request>
+  </con:method>
+</con:resource>
