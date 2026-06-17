@@ -12,16 +12,18 @@ public interface IMatchService
 
 public class MatchService : IMatchService
 {
-    private readonly List<Match> _matches = new()
+    private readonly List<Match> _matches = new();
+    private readonly object _lock = new();
+
+    public IEnumerable<Match> GetAllMatches()
     {
-        new Match { HomeTeam = "England", AwayTeam = "France", HomeScore = 1, AwayScore = 2, MatchDate = DateTime.UtcNow.AddDays(-3), Status = MatchStatus.Completed },
-        new Match { HomeTeam = "Germany", AwayTeam = "Brazil", HomeScore = 2, AwayScore = 2, MatchDate = DateTime.UtcNow.AddDays(-2), Status = MatchStatus.Completed },
-        new Match { HomeTeam = "Spain", AwayTeam = "Argentina", HomeScore = 0, AwayScore = 1, MatchDate = DateTime.UtcNow.AddDays(-1), Status = MatchStatus.Completed },
-    };
+        lock (_lock) return _matches.OrderByDescending(m => m.MatchDate).ToList();
+    }
 
-    public IEnumerable<Match> GetAllMatches() => _matches.OrderByDescending(m => m.MatchDate);
-
-    public Match? GetMatch(Guid matchId) => _matches.FirstOrDefault(m => m.MatchId == matchId);
+    public Match? GetMatch(Guid matchId)
+    {
+        lock (_lock) return _matches.FirstOrDefault(m => m.MatchId == matchId);
+    }
 
     public Match AddMatch(CreateMatchRequest request)
     {
@@ -34,15 +36,18 @@ public class MatchService : IMatchService
             MatchDate = request.MatchDate,
             Status = MatchStatus.Completed
         };
-        _matches.Add(match);
+        lock (_lock) _matches.Add(match);
         return match;
     }
 
     public IEnumerable<TableEntry> GetTable()
     {
+        List<Match> snapshot;
+        lock (_lock) snapshot = _matches.ToList();
+
         var entries = new Dictionary<string, TableEntry>();
 
-        foreach (var match in _matches.Where(m => m.Status == MatchStatus.Completed))
+        foreach (var match in snapshot.Where(m => m.Status == MatchStatus.Completed))
         {
             if (!entries.ContainsKey(match.HomeTeam))
                 entries[match.HomeTeam] = new TableEntry { Team = match.HomeTeam };
