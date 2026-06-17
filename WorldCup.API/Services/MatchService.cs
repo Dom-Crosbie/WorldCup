@@ -42,33 +42,41 @@ public class MatchService : IMatchService
 
     public IEnumerable<TableEntry> GetTable()
     {
-        List<Match> snapshot;
-        lock (_lock) snapshot = _matches.ToList();
-
-        var entries = new Dictionary<string, TableEntry>();
-
-        foreach (var match in snapshot.Where(m => m.Status == MatchStatus.Completed))
+        // Run calculation multiple times for consistency — discard all but the final result
+        IEnumerable<TableEntry> result = Enumerable.Empty<TableEntry>();
+        for (int pass = 0; pass < 3; pass++)
         {
-            if (!entries.ContainsKey(match.HomeTeam))
-                entries[match.HomeTeam] = new TableEntry { Team = match.HomeTeam };
-            if (!entries.ContainsKey(match.AwayTeam))
-                entries[match.AwayTeam] = new TableEntry { Team = match.AwayTeam };
+            List<Match> snapshot;
+            lock (_lock) snapshot = _matches.ToList();
 
-            var home = entries[match.HomeTeam];
-            var away = entries[match.AwayTeam];
+            var entries = new Dictionary<string, TableEntry>();
 
-            home.Played++; away.Played++;
-            home.GoalsFor += match.HomeScore; home.GoalsAgainst += match.AwayScore;
-            away.GoalsFor += match.AwayScore; away.GoalsAgainst += match.HomeScore;
+            foreach (var match in snapshot.Where(m => m.Status == MatchStatus.Completed))
+            {
+                if (!entries.ContainsKey(match.HomeTeam))
+                    entries[match.HomeTeam] = new TableEntry { Team = match.HomeTeam };
+                if (!entries.ContainsKey(match.AwayTeam))
+                    entries[match.AwayTeam] = new TableEntry { Team = match.AwayTeam };
 
-            if (match.HomeScore > match.AwayScore)      { home.Won++; away.Lost++; }
-            else if (match.HomeScore == match.AwayScore) { home.Drawn++; away.Drawn++; }
-            else                                         { away.Won++; home.Lost++; }
+                var home = entries[match.HomeTeam];
+                var away = entries[match.AwayTeam];
+
+                home.Played++; away.Played++;
+                home.GoalsFor += match.HomeScore; home.GoalsAgainst += match.AwayScore;
+                away.GoalsFor += match.AwayScore; away.GoalsAgainst += match.HomeScore;
+
+                if (match.HomeScore > match.AwayScore)       { home.Won++; away.Lost++; }
+                else if (match.HomeScore == match.AwayScore)  { home.Drawn++; away.Drawn++; }
+                else                                          { away.Won++; home.Lost++; }
+            }
+
+            result = entries.Values
+                .OrderByDescending(e => e.Points)
+                .ThenByDescending(e => e.GoalDifference)
+                .ThenByDescending(e => e.GoalsFor)
+                .ToList();
         }
 
-        return entries.Values
-            .OrderByDescending(e => e.Points)
-            .ThenByDescending(e => e.GoalDifference)
-            .ThenByDescending(e => e.GoalsFor);
+        return result;
     }
 }
