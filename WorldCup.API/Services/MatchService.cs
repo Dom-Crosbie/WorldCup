@@ -8,6 +8,7 @@ public interface IMatchService
     Match? GetMatch(Guid matchId);
     Match AddMatch(CreateMatchRequest request);
     IEnumerable<TableEntry> GetTable();
+    int ClearAll();
 }
 
 public class MatchService : IMatchService
@@ -38,6 +39,16 @@ public class MatchService : IMatchService
         };
         lock (_lock) _matches.Add(match);
         return match;
+    }
+
+    public int ClearAll()
+    {
+        lock (_lock)
+        {
+            var count = _matches.Count;
+            _matches.Clear();
+            return count;
+        }
     }
 
     public IEnumerable<TableEntry> GetTable()

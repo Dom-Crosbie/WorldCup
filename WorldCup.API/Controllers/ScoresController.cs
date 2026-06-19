@@ -49,4 +49,13 @@ public class ScoresController : ControllerBase
         var match = _matchService.AddMatch(request);
         return CreatedAtAction(nameof(GetScore), new { matchId = match.MatchId }, match);
     }
+
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult DeleteAllScores()
+    {
+        var removed = _matchService.ClearAll();
+        _logger.LogInformation("Cleared all match data. {Count} match(es) removed.", removed);
+        return Ok(new { message = $"All match data cleared. {removed} match(es) removed." });
+    }
 }
