@@ -15,6 +15,12 @@ public class MatchService : IMatchService
 {
     private readonly List<Match> _matches = new();
     private readonly object _lock = new();
+    private readonly ILogger<MatchService> _logger;
+
+    public MatchService(ILogger<MatchService> logger)
+    {
+        _logger = logger;
+    }
 
     public IEnumerable<Match> GetAllMatches()
     {
@@ -37,7 +43,18 @@ public class MatchService : IMatchService
             MatchDate = request.MatchDate,
             Status = MatchStatus.Completed
         };
-        lock (_lock) _matches.Add(match);
+
+        var lockStartTime = DateTime.UtcNow;
+        lock (_lock)
+        {
+            var addMatchStart = DateTime.UtcNow;
+            _matches.Add(match);
+            var addMatchTime = (DateTime.UtcNow - addMatchStart).TotalMilliseconds;
+            var totalLockTime = (DateTime.UtcNow - lockStartTime).TotalMilliseconds;
+
+            _logger.LogInformation("[TIMING-master] AddMatch breakdown (ms): AddMatch={AddMatchMs} TotalLock={TotalLockMs}",
+                addMatchTime, totalLockTime);
+        }
         return match;
     }
 
