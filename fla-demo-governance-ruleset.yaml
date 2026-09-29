@@ -2,15 +2,22 @@
 # Enforces the 11 custom governance fields agreed for API specs.
 rules:
   api-must-define-ownership:
-    description: "2.1 - API must declare ownership, producers and consumers"
-    message: "info.x-ownership and info.x-producers-consumers are required"
+    description: "2.1 - API must declare ownership"
+    message: "info.x-ownership is required"
     given: "$.info"
     severity: error
     then:
-      - field: x-ownership
-        function: truthy
-      - field: x-producers-consumers
-        function: truthy
+      field: x-ownership
+      function: truthy
+
+  api-must-define-producers-consumers:
+    description: "2.1 - API must declare producers and consumers"
+    message: "info.x-producers-consumers is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-producers-consumers
+      function: truthy
 
   api-must-define-sla:
     description: "2.4 - API must declare an SLA"
