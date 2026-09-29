@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Legacy Billing API",
+    "version": "1.0.0",
+    "description": "Legacy billing API kept for backwards compatibility. Tagged legacy so the SLA/WAF/security governance rules are waived.",
+    "x-lifecycle": "legacy",
+    "x-ownership": {
+      "owningTeam": "Billing Platform Team",
+      "productOwner": "Jane Doe",
+      "techLead": "John Smith",
+      "supportContact": "billing-support@example.com"
+    },
+    "x-producers-consumers": {
+      "producers": ["Billing Engine"],
+      "consumers": ["Legacy Invoicing UI"]
+    },
+    "x-expected-traffic": {
+      "averageRequestsPerSecond": 5
+    },
+    "x-dependencies": {
+      "upstream": ["Payments API"]
+    },
+    "x-monitoring": {
+      "dashboard": "https://monitoring.example.com/legacy-billing"
+    }
+  },
+  "paths": {
+    "/invoices": {
+      "get": {
+        "summary": "List invoices",
+        "x-rate-limit": "100 req/min",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

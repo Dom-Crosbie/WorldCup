@@ -1,0 +1,110 @@
+# Shared organization governance ruleset.
+# Hosted in GitHub and consumed by every API repo via:
+#   extends:
+#     - https://raw.githubusercontent.com/Dom-Crosbie/WorldCup/master/governance/base-ruleset.yaml
+#
+# This file is the single source of truth for the 11 governance fields agreed
+# for all API specs. Individual repos should NOT edit this file directly -
+# use a local .spectral.yml that extends it and overrides specific rules
+# (see governance/.spectral.yml for the legacy-API override example).
+rules:
+  api-must-define-ownership:
+    description: "2.1 - API must declare ownership"
+    message: "info.x-ownership is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-ownership
+      function: truthy
+
+  api-must-define-producers-consumers:
+    description: "2.1 - API must declare producers and consumers"
+    message: "info.x-producers-consumers is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-producers-consumers
+      function: truthy
+
+  api-must-define-sla:
+    description: "2.4 - API must declare an SLA"
+    message: "info.x-sla is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-sla
+      function: truthy
+
+  api-must-define-expected-traffic:
+    description: "2.5 - API must declare expected traffic volumes"
+    message: "info.x-expected-traffic is required"
+    given: "$.info"
+    severity: warn
+    then:
+      field: x-expected-traffic
+      function: truthy
+
+  api-must-define-waf:
+    description: "2.7 - API must declare WAF protection posture"
+    message: "info.x-waf is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-waf
+      function: truthy
+
+  api-must-define-dependencies:
+    description: "2.8 - API must declare end-to-end dependencies"
+    message: "info.x-dependencies is required"
+    given: "$.info"
+    severity: warn
+    then:
+      field: x-dependencies
+      function: truthy
+
+  api-must-define-monitoring:
+    description: "2.10 - API must declare monitoring details"
+    message: "info.x-monitoring is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-monitoring
+      function: truthy
+
+  api-must-define-security-info:
+    description: "2.11 - API must declare security/audit information"
+    message: "info.x-security is required"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-security
+      function: truthy
+
+  operations-must-define-rate-limit:
+    description: "2.3 - Every operation must declare a rate limit"
+    message: "x-rate-limit is required on every operation"
+    given: "$.paths[*][*]"
+    severity: error
+    then:
+      field: x-rate-limit
+      function: truthy
+
+  write-operations-must-define-retry-or-parallelism:
+    description: "2.2/2.6 - Write operations must declare retry mechanism or parallel processing behaviour"
+    message: "x-retry-policy or x-parallel-processing is required on POST/PUT operations"
+    given: "$.paths[*][post,put]"
+    severity: warn
+    then:
+      - field: x-retry-policy
+        function: truthy
+      - field: x-parallel-processing
+        function: truthy
+
+  error-responses-must-define-error-details:
+    description: "2.9 - Error responses must document meaning, impact, owner, follow-up, monitoring, classification"
+    message: "x-error-details (meaning, functionalImpact, responsibleParty, followUpProcedure, monitoringRequirements, classification) is required on 4xx/5xx responses"
+    given: "$.components.responses[*]"
+    severity: error
+    then:
+      field: x-error-details
+      function: truthy

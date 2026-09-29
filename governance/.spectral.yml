@@ -1,0 +1,42 @@
+# Local override layer for this repo/API.
+#
+# Extends the shared governance ruleset hosted on GitHub, then overrides three
+# rules so that APIs tagged as legacy (info.x-lifecycle: legacy) are exempt
+# from them, while every other rule from the shared ruleset still applies
+# unchanged.
+extends:
+  - https://raw.githubusercontent.com/Dom-Crosbie/WorldCup/master/governance/base-ruleset.yaml
+
+functions:
+  - legacyExempt
+
+functionsDir: functions
+
+rules:
+  # --- Overrides: same rule name as the base ruleset, redefined here ---
+  api-must-define-sla:
+    description: "2.4 - API must declare an SLA (waived for legacy APIs)"
+    message: "info.x-sla is required (unless info.x-lifecycle is 'legacy')"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-sla
+      function: legacyExempt
+
+  api-must-define-waf:
+    description: "2.7 - API must declare WAF protection posture (waived for legacy APIs)"
+    message: "info.x-waf is required (unless info.x-lifecycle is 'legacy')"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-waf
+      function: legacyExempt
+
+  api-must-define-security-info:
+    description: "2.11 - API must declare security/audit information (waived for legacy APIs)"
+    message: "info.x-security is required (unless info.x-lifecycle is 'legacy')"
+    given: "$.info"
+    severity: error
+    then:
+      field: x-security
+      function: legacyExempt

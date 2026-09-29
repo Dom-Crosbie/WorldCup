@@ -1,0 +1,40 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Current Billing API",
+    "version": "2.0.0",
+    "description": "Actively maintained billing API. Not tagged legacy, so all governance rules apply including SLA/WAF/security.",
+    "x-ownership": {
+      "owningTeam": "Billing Platform Team",
+      "productOwner": "Jane Doe",
+      "techLead": "John Smith",
+      "supportContact": "billing-support@example.com"
+    },
+    "x-producers-consumers": {
+      "producers": ["Billing Engine"],
+      "consumers": ["Invoicing UI"]
+    },
+    "x-expected-traffic": {
+      "averageRequestsPerSecond": 50
+    },
+    "x-dependencies": {
+      "upstream": ["Payments API"]
+    },
+    "x-monitoring": {
+      "dashboard": "https://monitoring.example.com/billing"
+    }
+  },
+  "paths": {
+    "/invoices": {
+      "get": {
+        "summary": "List invoices",
+        "x-rate-limit": "1000 req/min",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
