@@ -1,0 +1,8 @@
+Error-Responses-Must-Define-Error-Details:
+  description: "2.9 - Every reusable error response must document meaning, functional impact, responsible party, follow-up procedure, monitoring requirements and classification (P1-4) in x-error-details."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: components.responses.*.x-error-details
+    type: shouldExist

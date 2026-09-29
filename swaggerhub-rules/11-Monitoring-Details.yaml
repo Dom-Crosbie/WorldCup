@@ -1,0 +1,8 @@
+API-Must-Define-Monitoring-Details:
+  description: "2.10 - API must declare monitoring details (expected behaviour, expected volumes, alert definitions, missing message detection) in info.x-monitoring."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: info.x-monitoring
+    type: shouldExist

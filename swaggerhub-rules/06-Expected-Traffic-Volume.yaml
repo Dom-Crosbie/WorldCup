@@ -1,0 +1,8 @@
+API-Must-Define-Expected-Traffic-Volume:
+  description: "2.5 - API must declare expected traffic volume in info.x-expected-traffic."
+  oas: all
+  severity: warning
+  enabled: true
+  rule:
+    path: info.x-expected-traffic
+    type: shouldExist

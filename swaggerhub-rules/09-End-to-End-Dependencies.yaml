@@ -1,0 +1,8 @@
+API-Must-Define-End-to-End-Dependencies:
+  description: "2.8 - API must declare its end-to-end upstream/downstream dependencies in info.x-dependencies."
+  oas: all
+  severity: warning
+  enabled: true
+  rule:
+    path: info.x-dependencies
+    type: shouldExist

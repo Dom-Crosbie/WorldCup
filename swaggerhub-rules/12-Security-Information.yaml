@@ -1,0 +1,8 @@
+API-Must-Define-Security-Information:
+  description: "2.11 - API must declare security information for audits, incident analysis, change-impact analysis and ISO 27001 documentation in info.x-security."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: info.x-security
+    type: shouldExist

@@ -1,0 +1,8 @@
+API-Must-Define-SLA:
+  description: "2.4 - API must declare its SLA (availability target, response time, support hours) in info.x-sla."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: info.x-sla
+    type: shouldExist

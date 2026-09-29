@@ -1,0 +1,8 @@
+Write-Operations-Must-Define-Retry-Mechanism:
+  description: "2.2 - POST/PUT operations must declare a retry mechanism in x-retry-policy."
+  oas: all
+  severity: warning
+  enabled: true
+  rule:
+    path: paths.*[post,put].x-retry-policy
+    type: shouldExist

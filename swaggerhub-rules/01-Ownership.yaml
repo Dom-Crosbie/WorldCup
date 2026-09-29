@@ -1,0 +1,8 @@
+API-Must-Define-Ownership:
+  description: "2.1 - API must declare ownership (owning team, product owner, tech lead, support contact) in info.x-ownership."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: info.x-ownership
+    type: shouldExist

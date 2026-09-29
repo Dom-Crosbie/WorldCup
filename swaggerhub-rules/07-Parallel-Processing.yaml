@@ -1,0 +1,8 @@
+Write-Operations-Must-Define-Parallel-Processing:
+  description: "2.6 - POST/PUT operations must declare parallel processing behaviour in x-parallel-processing."
+  oas: all
+  severity: warning
+  enabled: true
+  rule:
+    path: paths.*[post,put].x-parallel-processing
+    type: shouldExist

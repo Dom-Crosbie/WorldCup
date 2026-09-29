@@ -1,0 +1,8 @@
+Operations-Must-Define-Rate-Limit:
+  description: "2.3 - Every operation must declare its rate limit in x-rate-limit."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: paths.*[get,post,put,delete,query].x-rate-limit
+    type: shouldExist

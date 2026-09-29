@@ -1,0 +1,8 @@
+API-Must-Define-Producers-Consumers:
+  description: "2.1 - API must declare its producers and consumers in info.x-producers-consumers."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: info.x-producers-consumers
+    type: shouldExist

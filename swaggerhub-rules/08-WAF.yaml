@@ -1,0 +1,8 @@
+API-Must-Define-WAF:
+  description: "2.7 - API must declare its WAF protection posture in info.x-waf."
+  oas: all
+  severity: critical
+  enabled: true
+  rule:
+    path: info.x-waf
+    type: shouldExist
