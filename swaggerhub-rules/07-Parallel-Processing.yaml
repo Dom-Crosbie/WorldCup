@@ -4,5 +4,5 @@ Write-Operations-Must-Define-Parallel-Processing:
   severity: warning
   enabled: true
   rule:
-    path: paths.*[post,put].x-parallel-processing
-    type: shouldExist
+    Path: paths.*[post,put].x-parallel-processing
+    type: shouldExists

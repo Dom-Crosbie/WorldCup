@@ -4,5 +4,5 @@ API-Must-Define-Ownership:
   severity: critical
   enabled: true
   rule:
-    path: info.x-ownership
-    type: shouldExist
+    Path: info.x-ownership
+    type: shouldExists

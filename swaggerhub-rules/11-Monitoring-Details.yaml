@@ -4,5 +4,5 @@ API-Must-Define-Monitoring-Details:
   severity: critical
   enabled: true
   rule:
-    path: info.x-monitoring
-    type: shouldExist
+    Path: info.x-monitoring
+    type: shouldExists

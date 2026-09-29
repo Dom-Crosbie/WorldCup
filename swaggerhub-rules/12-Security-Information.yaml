@@ -4,5 +4,5 @@ API-Must-Define-Security-Information:
   severity: critical
   enabled: true
   rule:
-    path: info.x-security
-    type: shouldExist
+    Path: info.x-security
+    type: shouldExists

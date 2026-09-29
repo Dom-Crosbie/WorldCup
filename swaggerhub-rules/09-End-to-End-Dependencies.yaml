@@ -4,5 +4,5 @@ API-Must-Define-End-to-End-Dependencies:
   severity: warning
   enabled: true
   rule:
-    path: info.x-dependencies
-    type: shouldExist
+    Path: info.x-dependencies
+    type: shouldExists

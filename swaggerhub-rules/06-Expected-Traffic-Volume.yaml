@@ -4,5 +4,5 @@ API-Must-Define-Expected-Traffic-Volume:
   severity: warning
   enabled: true
   rule:
-    path: info.x-expected-traffic
-    type: shouldExist
+    Path: info.x-expected-traffic
+    type: shouldExists

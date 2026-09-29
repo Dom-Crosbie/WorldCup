@@ -4,5 +4,5 @@ Write-Operations-Must-Define-Retry-Mechanism:
   severity: warning
   enabled: true
   rule:
-    path: paths.*[post,put].x-retry-policy
-    type: shouldExist
+    Path: paths.*[post,put].x-retry-policy
+    type: shouldExists

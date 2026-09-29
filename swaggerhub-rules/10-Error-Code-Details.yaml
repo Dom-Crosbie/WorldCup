@@ -4,5 +4,5 @@ Error-Responses-Must-Define-Error-Details:
   severity: critical
   enabled: true
   rule:
-    path: components.responses.*.x-error-details
-    type: shouldExist
+    Path: components.responses.*.x-error-details
+    type: shouldExists

@@ -4,5 +4,5 @@ API-Must-Define-SLA:
   severity: critical
   enabled: true
   rule:
-    path: info.x-sla
-    type: shouldExist
+    Path: info.x-sla
+    type: shouldExists

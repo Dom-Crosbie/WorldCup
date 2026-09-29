@@ -4,5 +4,5 @@ Operations-Must-Define-Rate-Limit:
   severity: critical
   enabled: true
   rule:
-    path: paths.*[get,post,put,delete,query].x-rate-limit
-    type: shouldExist
+    Path: paths.*[get,post,put,delete,query].x-rate-limit
+    type: shouldExists

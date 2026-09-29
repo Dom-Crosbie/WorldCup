@@ -4,5 +4,5 @@ API-Must-Define-Producers-Consumers:
   severity: critical
   enabled: true
   rule:
-    path: info.x-producers-consumers
-    type: shouldExist
+    Path: info.x-producers-consumers
+    type: shouldExists

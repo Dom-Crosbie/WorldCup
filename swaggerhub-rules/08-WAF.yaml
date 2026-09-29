@@ -4,5 +4,5 @@ API-Must-Define-WAF:
   severity: critical
   enabled: true
   rule:
-    path: info.x-waf
-    type: shouldExist
+    Path: info.x-waf
+    type: shouldExists
