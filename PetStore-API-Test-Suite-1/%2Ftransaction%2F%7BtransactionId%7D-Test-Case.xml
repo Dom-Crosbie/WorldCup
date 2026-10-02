@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="df4246f9-a64c-4cd7-ab7d-9ccf62e86d87" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/transaction/{transactionId} Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/transaction/{transactionId}] located at [/transaction/{transactionId}]</con:description>
+  <con:settings>
+    <con:setting id="df4246f9-a64c-4cd7-ab7d-9ccf62e86d87fileName">%2Ftransaction%2F%7BtransactionId%7D-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="eae503cb-f843-456a-bf63-28c93ab4ea3b">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/transaction/{transactionId}" methodName="getTransactionById" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="41cc1d68-3a60-4cbc-ad9f-a7e32c61eb58" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 1 2" id="dce5051d-ecc1-4f5c-ae63-b499b8e5249e">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/transaction/{transactionId}" methodName="deleteTransaction" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1 2" id="11d759b1-71cd-4a9b-b3e8-ba03625e3e60" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

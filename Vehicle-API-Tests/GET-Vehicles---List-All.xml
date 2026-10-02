@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="22423db0-d5d7-4d34-8e52-6c64f46d6037" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="GET Vehicles - List All" searchProperties="true" timeout="0">
+  <con:settings>
+    <con:setting id="22423db0-d5d7-4d34-8e52-6c64f46d6037fileName">GET-Vehicles---List-All</con:setting>
+  </con:settings>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

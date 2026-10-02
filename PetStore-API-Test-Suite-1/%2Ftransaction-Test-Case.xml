@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="87215904-c268-4a9f-9760-f0a1e471ebb5" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/transaction Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/transaction] located at [/transaction]</con:description>
+  <con:settings>
+    <con:setting id="87215904-c268-4a9f-9760-f0a1e471ebb5fileName">%2Ftransaction-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="e63c6310-6d38-4db7-b7f4-2e2a28547851">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/transaction" methodName="createTransaction" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="17fa0c0c-2e8d-422b-a5cf-0bf9b2bdae71" mediaType="*/*">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

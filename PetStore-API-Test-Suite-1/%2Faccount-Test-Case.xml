@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="81a3a061-36f3-44c2-b099-f971e1885b62" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/account Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/account] located at [/account]</con:description>
+  <con:settings>
+    <con:setting id="81a3a061-36f3-44c2-b099-f971e1885b62fileName">%2Faccount-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="8551743a-8810-4f7c-8843-a9c16fe592b0">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/account" methodName="openAccount" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="abfab1ed-1552-4131-9ad7-c2daaccc80bf" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request>{\r
+  "id" : 0,\r
+  "accountType" : {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  },\r
+  "name" : "Joe Bloggs",\r
+  "photoUrls" : [ "string" ],\r
+  "tags" : [ {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  } ],\r
+  "status" : "open"\r
+}</con:request>
+        <con:originalUri>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0/account</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 2" id="9f94bff2-b178-4fbf-a1ec-351bc2d8c5e0">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/account" methodName="openAccount" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 2" id="cd57e9c3-a9d3-40b8-b6d6-55f7f9dd6224" mediaType="application/xml" postQueryString="false">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request><![CDATA[<Account>\r
+   <id>0</id>\r
+   <AccountType>\r
+      <id>0</id>\r
+      <name>string</name>\r
+   </AccountType>\r
+   <name>Joe Bloggs</name>\r
+   <photoUrl>\r
+      <photoUrl>string</photoUrl>\r
+   </photoUrl>\r
+   <tag>\r
+      <Tag>\r
+         <id>0</id>\r
+         <name>string</name>\r
+      </Tag>\r
+   </tag>\r
+   <status>open</status>\r
+</Account>]]></con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 1 2" id="5e0cb5d6-2aa5-4e5b-92a5-243f7e5e4cfc">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/account" methodName="updateAccount" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1 2" id="ba2d6f6a-d139-44d5-88ad-e6125578bda6" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request>{\r
+  "id" : 0,\r
+  "accountType" : {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  },\r
+  "name" : "Joe Bloggs",\r
+  "photoUrls" : [ "string" ],\r
+  "tags" : [ {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  } ],\r
+  "status" : "open"\r
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 2 2" id="24a71b62-d2ba-42fe-871f-62e601b2ecab">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/account" methodName="updateAccount" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 2 2" id="4ff36b4f-4109-4838-955c-d957e9dc7cdc" mediaType="application/xml">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request><![CDATA[<Account>\r
+   <id>0</id>\r
+   <AccountType>\r
+      <id>0</id>\r
+      <name>string</name>\r
+   </AccountType>\r
+   <name>Joe Bloggs</name>\r
+   <photoUrl>\r
+      <photoUrl>string</photoUrl>\r
+   </photoUrl>\r
+   <tag>\r
+      <Tag>\r
+         <id>0</id>\r
+         <name>string</name>\r
+      </Tag>\r
+   </tag>\r
+   <status>open</status>\r
+</Account>]]></con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="156a1a4e-6449-4a00-9452-972dcd3869cd" name="Functional Test">
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="156a1a4e-6449-4a00-9452-972dcd3869cd" name="Functional Test">
   <con:description>The test suite generated for the REST service [WorldCupScores API]</con:description>
   <con:settings id="2a1e9408-5b52-402c-99c8-b5e6cc16d7f9">
     <con:setting id="156a1a4e-6449-4a00-9452-972dcd3869cdfileName">Functional-Test</con:setting>
@@ -7,4 +7,15 @@
   <con:runType>SEQUENTIAL</con:runType>
   <con:properties/>
   <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
 </con:testSuite>

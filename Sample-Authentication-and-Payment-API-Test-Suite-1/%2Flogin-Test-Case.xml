@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0d21ed9c-859d-442d-b5bf-df3c935189a4" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/login Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/login] located at [/login]</con:description>
+  <con:settings>
+    <con:setting id="0d21ed9c-859d-442d-b5bf-df3c935189a4fileName">%2Flogin-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="8092a2e9-adc1-4e7b-8db1-313588482824">
+    <con:settings/>
+    <con:config service="Sample Authentication and Payment API" resourcePath="/login" methodName="loginUser" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="993acfb6-5959-4ef5-948b-0f14dad07ac7" mediaType="application/json" postQueryString="false">
+        <con:settings/>
+        <con:endpoint>/</con:endpoint>
+        <con:request>{\r
+  "username" : "string",\r
+  "password" : "string"\r
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

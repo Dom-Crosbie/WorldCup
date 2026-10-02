@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="a4f15417-f306-4399-8a8b-70c8fd89843a" name="PetStore API Test Suite 1">
+  <con:description>The test suite generated for the REST service [PetStore API]</con:description>
+  <con:settings id="218f1c06-c2fc-453c-a2a8-040e8314841c">
+    <con:setting id="a4f15417-f306-4399-8a8b-70c8fd89843afileName">PetStore-API-Test-Suite-1</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testSuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="a69e6277-9ace-4c91-be40-8896c6c28703" name="Sample Authentication and Payment API Test Suite 1">
+  <con:description>The test suite generated for the REST service [Sample Authentication and Payment API]</con:description>
+  <con:settings id="07c367fd-a7dc-4f74-85bd-487bd4648c3b">
+    <con:setting id="a69e6277-9ace-4c91-be40-8896c6c28703fileName">Sample-Authentication-and-Payment-API-Test-Suite-1</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testSuite>

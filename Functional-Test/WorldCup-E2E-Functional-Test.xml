@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="2e0467b5-f6cb-4bd3-8f99-ec2d67d72430" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="true" name="WorldCup E2E Functional Test" searchProperties="true" timeout="0">
+  <con:description>
+    End-to-end functional test suite for the WorldCup API.
+    Tests the full lifecycle of match submission and verification using
+    data-generated country matchups and scores across a simulated group stage.
+
+    Flow per iteration:
+      1. POST /scores  Submit a match result (data-driven: 6 matches)
+      2. Property Transfer Extract the returned matchId
+      3. GET /scores/{matchId} Verify the exact match was stored correctly
+      4. GET /scores Verify the match appears in the full list
+      5. GET /table Verify both teams appear and table is sorted by points
+
+    After all data rows are processed:
+      6. Negative: POST with missing fields expects 400
+      7. Negative: POST with negative scores expects 400
+      8. Negative: GET with a non-existent UUID expects 404
+      9. Negative: GET with a malformed UUID expects 400 or 404
+     10. Final GET /table with full schema and sort-order validation</con:description>
+  <con:settings>
+    <con:setting id="2e0467b5-f6cb-4bd3-8f99-ec2d67d72430fileName">WorldCup-E2E-Functional-Test</con:setting>
+    <con:setting id="IncludeOverview">true</con:setting>
+    <con:setting id="IncludeResults">true</con:setting>
+    <con:setting id="FlowLayout">false</con:setting>
+    <con:setting id="ErrorDetails">true</con:setting>
+    <con:setting id="IncludeCoverage">true</con:setting>
+  </con:settings>
+  <!--================================================================
+       STEP 1 â€“ Properties: holds the current data-row values
+       ================================================================-->
+  <con:testStep type="datasource" name="Get Countries" id="cfd0259b-a29f-4c63-9e18-5e592a3b16f3">
+    <con:settings>
+      <con:setting id="com.eviware.soapui.impl.wsdl.teststeps.datasource.DataSourceContainer@prepared-properties">&lt;xml-fragment/></con:setting>
+    </con:settings>
+    <con:config xsi:type="con:DataSourceStep">
+      <con:dataSource type="Excel">
+        <con:configuration>
+          <file>C:/Users/dominick.crosbie/Documents/Countries.xlsx</file>
+          <worksheet/>
+          <cell>A2</cell>
+          <ignoreEmpty>false</ignoreEmpty>
+          <evaluateFormulas>false</evaluateFormulas>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>HomeCountry</con:property>
+      <con:property>AwayCountry</con:property>
+      <con:completeLastOperation>true</con:completeLastOperation>
+      <con:restartOnRun>true</con:restartOnRun>
+      <con:stopDatasourceExhausted>false</con:stopDatasourceExhausted>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 2 â€“ Groovy: Initialise data generator and load first row
+       ================================================================-->
+  <!--================================================================
+       STEP 3 â€“ POST /scores â€“ Submit a match result (data-driven)
+       ================================================================-->
+  <con:testStep type="datagen" name="Invent Scores" id="fd55304b-1363-46dd-acee-5fa268c1d127">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep">
+      <con:property type="Number">
+        <con:configuration>
+          <start>0</start>
+          <end>5</end>
+          <step/>
+          <pattern/>
+          <random>true</random>
+          <persist>false</persist>
+        </con:configuration>
+        <con:name>Home Team Goals</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Number">
+        <con:configuration>
+          <start>0</start>
+          <end>4</end>
+          <step/>
+          <pattern/>
+          <random>true</random>
+          <persist>false</persist>
+        </con:configuration>
+        <con:name>Away Team Goals</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script> import java.time.ZoneOffset
+ import java.time.ZonedDateTime
+ import java.time.format.DateTimeFormatter
+ 
+ def today = ZonedDateTime.now(ZoneOffset.UTC)</script>
+        </con:configuration>
+        <con:name>Date of Match</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 4 â€“ Property Transfer: capture the returned matchId
+       ================================================================-->
+  <!--================================================================
+       STEP 5 â€“ GET /scores/{matchId} â€“ verify the match was stored
+       ================================================================-->
+  <con:testStep type="restrequest" name="POST Submit Match Result" id="1d40c61d-bef8-4469-9560-6e4175a10820">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="submitMatchResult" xsi:type="con:RestRequestStep">
+      <con:restRequest name="POST Submit Match Result" id="26384289-1a85-4bf5-9f0f-93a5ef6a4886" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{
+  "homeTeam": "${Get Countries#HomeCountry}",
+  "awayTeam": "${Get Countries#AwayCountry}",
+  "homeScore": ${Invent Scores#Home Team Goals},
+  "awayScore": ${Invent Scores#Home Team Goals},
+  "matchDate": "${Invent Scores#Date of Match}"
+}</con:request>
+        <con:originalUri>http://localhost/scores</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <!--Assert HTTP 201 Created-->
+        <con:assertion type="Valid HTTP Status Codes" id="c7930b56-2257-4fcc-a46c-78614f4472e5" name="Status 201 - Created">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <!--Assert matchId is present in the response-->
+        <!--Assert homeTeam echo matches the input-->
+        <con:assertion type="JsonPath Match" id="97c64f45-eaf6-453c-92a2-45d37a047c89" name="homeTeam echoed correctly">
+          <con:settings/>
+          <con:configuration>
+            <path>$.homeTeam</path>
+            <content>${POST Submit Match Result#ResponseAsXml#declare namespace ns1='http://localhost/scores'; //ns1:Response[1]/ns1:homeTeam[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <!--Assert awayTeam echo matches the input-->
+        <con:assertion type="JsonPath Match" id="d52fd991-f85f-4edd-8515-f35202d16b88" name="awayTeam echoed correctly">
+          <con:settings/>
+          <con:configuration>
+            <path>$.awayTeam</path>
+            <content>${POST Submit Match Result#ResponseAsXml#declare namespace ns1='http://localhost/scores'; //ns1:Response[1]/ns1:awayTeam[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <!--Assert homeScore echo matches the input-->
+        <con:assertion type="JsonPath Match" id="0d6d8978-20be-45c0-a6b3-adfcac21a17d" name="homeScore echoed correctly">
+          <con:settings/>
+          <con:configuration>
+            <path>$.homeScore</path>
+            <content>${POST Submit Match Result#ResponseAsXml#declare namespace ns1='http://localhost/scores'; //ns1:Response[1]/ns1:homeScore[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <!--Assert awayScore echo matches the input-->
+        <con:assertion type="JsonPath Match" id="6830d98a-6932-4a34-b7cc-d77e6c130aa2" name="awayScore echoed correctly">
+          <con:settings/>
+          <con:configuration>
+            <path>$.awayScore</path>
+            <content>${POST Submit Match Result#ResponseAsXml#declare namespace ns1='http://localhost/scores'; //ns1:Response[1]/ns1:awayScore[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <!--Assert status field is present-->
+        <con:assertion type="JsonPath Match" id="622a6ea6-0646-49b7-9ed5-fb74005d4772" name="status field exists in response">
+          <con:settings/>
+          <con:configuration>
+            <path>$.status</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <!--SLA: response must arrive within 2 seconds-->
+        <con:assertion type="SwaggerComplianceAssertion" id="8f56fb39-f28b-4ce7-92f8-a84db0ae5b28" name="Swagger Compliance Assertion">
+          <con:configuration/>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="49e2c58e-e737-4c2d-9556-0ab98385a951" name="Response SLA" disabled="true">
+          <con:configuration>
+            <SLA>40</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 6 â€“ GET /scores â€“ confirm the match appears in the full list
+       ================================================================-->
+  <con:testStep type="transfer" name="Extract Created Match ID" id="6c5a5627-9736-4ba2-9e85-eca0d3096861">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" disabled="false" failOnError="false" transferToAll="false" entitize="true" transferChildNodes="false" ignoreEmpty="false">
+        <con:transfer name="POST response matchId â†’ Current Match Data">
+          <con:sourceStepName>POST Submit Match Result</con:sourceStepName>
+          <con:sourceType>RESPONSE</con:sourceType>
+          <con:sourcePath>$.matchId</con:sourcePath>
+          <con:sourcePathLanguage>JSONPATH</con:sourcePathLanguage>
+          <con:targetStepName>Current Match Data</con:targetStepName>
+          <con:targetType>PROPERTY</con:targetType>
+          <con:targetPath>createdMatchId</con:targetPath>
+          <con:failOnError>true</con:failOnError>
+          <con:transferToAll>false</con:transferToAll>
+          <con:transferChildNodes>false</con:transferChildNodes>
+          <con:useRegEx>false</con:useRegEx>
+          <con:ignoreEmpty>false</con:ignoreEmpty>
+        </con:transfer>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>POST Submit Match Result</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://localhost/scores';
+//ns1:Response[1]/ns1:matchId[1]</con:sourcePath>
+        <con:targetType>matchId</con:targetType>
+        <con:targetStep>GET Match By ID - Verify Created</con:targetStep>
+        <con:type>XPATH</con:type>
+        <con:targetTransferType>XPATH</con:targetTransferType>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" disabled="false">
+        <con:transfer name="POST response matchId â†’ Current Match Data">
+          <con:sourceStepName>POST Submit Match Result</con:sourceStepName>
+          <con:sourceType>RESPONSE</con:sourceType>
+          <con:sourcePath>$.matchId</con:sourcePath>
+          <con:sourcePathLanguage>JSONPATH</con:sourcePathLanguage>
+          <con:targetStepName>Current Match Data</con:targetStepName>
+          <con:targetType>PROPERTY</con:targetType>
+          <con:targetPath>createdMatchId</con:targetPath>
+          <con:failOnError>true</con:failOnError>
+          <con:transferToAll>false</con:transferToAll>
+          <con:transferChildNodes>false</con:transferChildNodes>
+          <con:useRegEx>false</con:useRegEx>
+          <con:ignoreEmpty>false</con:ignoreEmpty>
+        </con:transfer>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>POST Submit Match Result</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://localhost/scores';
+//ns1:Response[1]/ns1:matchId[1]</con:sourcePath>
+        <con:targetType>Request</con:targetType>
+        <con:targetStep>GET Match By ID - Verify Created</con:targetStep>
+        <con:type>XPATH</con:type>
+        <con:targetTransferType>XQUERY</con:targetTransferType>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" disabled="false">
+        <con:transfer name="POST response matchId â†’ Current Match Data">
+          <con:sourceStepName>POST Submit Match Result</con:sourceStepName>
+          <con:sourceType>RESPONSE</con:sourceType>
+          <con:sourcePath>$.matchId</con:sourcePath>
+          <con:sourcePathLanguage>JSONPATH</con:sourcePathLanguage>
+          <con:targetStepName>Current Match Data</con:targetStepName>
+          <con:targetType>PROPERTY</con:targetType>
+          <con:targetPath>createdMatchId</con:targetPath>
+          <con:failOnError>true</con:failOnError>
+          <con:transferToAll>false</con:transferToAll>
+          <con:transferChildNodes>false</con:transferChildNodes>
+          <con:useRegEx>false</con:useRegEx>
+          <con:ignoreEmpty>false</con:ignoreEmpty>
+        </con:transfer>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>POST Submit Match Result</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://localhost/scores';
+//ns1:Response[1]/ns1:matchId[1]</con:sourcePath>
+        <con:targetType>Request</con:targetType>
+        <con:targetStep>GET Match By ID - Verify Created</con:targetStep>
+        <con:type>XPATH</con:type>
+        <con:targetTransferType>XQUERY</con:targetTransferType>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" entitize="false" ignoreEmpty="false" transferToAll="false" transferChildNodes="false">
+        <con:name>Match Id</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>POST Submit Match Result</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://localhost/scores';
+//ns1:Response[1]/ns1:matchId[1]</con:sourcePath>
+        <con:targetType>matchId</con:targetType>
+        <con:targetStep>GET Match By ID - Verify Created</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 7 â€“ Groovy: assert created matchId is present in GET /scores
+       ================================================================-->
+  <!--================================================================
+       STEP 8 â€“ GET /table â€“ verify both teams now appear in standings
+       ================================================================-->
+  <con:testStep type="restrequest" name="GET Match By ID - Verify Created" id="8d2921a8-b858-4d10-b16b-63cc52fb739d">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores/{matchId}" methodName="getMatchScoreById" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET Match By ID - Verify Created" id="c45b6dd3-0e08-49fa-936b-0a7e2c8df513" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>bb360921-26fe-4274-88cc-1e0922b09876</con:request>
+        <con:originalUri>http://localhost/scores/</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="matchId" value="bb360921-26fe-4274-88cc-1e0922b09876"/>
+        </con:parameters>
+        <con:assertion type="JsonPath Match" id="5ddf8483-e84f-43ea-bb51-c42c849358d4" name="homeTeam is correct">
+          <con:settings/>
+          <con:configuration>
+            <path>$.homeTeam</path>
+            <content>${GET Match By ID - Verify Created#ResponseAsXml#declare namespace ns1='http://localhost/scores/'; //ns1:Response[1]/ns1:homeTeam[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="a86a28a6-1f0b-4a19-b55b-1761f78e709f" name="awayTeam is correct">
+          <con:settings/>
+          <con:configuration>
+            <path>$.awayTeam</path>
+            <content>${GET Match By ID - Verify Created#ResponseAsXml#declare namespace ns1='http://localhost/scores/'; //ns1:Response[1]/ns1:awayTeam[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="2ec55dfd-3858-411a-bf9b-695abfb39e73" name="homeScore is correct">
+          <con:settings/>
+          <con:configuration>
+            <path>$.homeScore</path>
+            <content>${GET Match By ID - Verify Created#ResponseAsXml#declare namespace ns1='http://localhost/scores/'; //ns1:Response[1]/ns1:homeScore[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="bb848f2f-dda2-4352-9309-075025347f10" name="awayScore is correct">
+          <con:settings/>
+          <con:configuration>
+            <path>$.awayScore</path>
+            <content>${GET Match By ID - Verify Created#ResponseAsXml#declare namespace ns1='http://localhost/scores/'; //ns1:Response[1]/ns1:awayScore[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="DataAndMetadataAssertion" id="c0c09764-dd82-4d14-b6b9-cb914fd56c51" name="Smart Assertion">
+          <con:configuration xsi:type="con:DataAndMetadataAssertion">
+            <con:mode>Received Data</con:mode>
+            <con:originalMessage>{"matchId":"0421af63-86a3-4905-91ab-40590ef5188b","homeTeam":"Uzbekistan","awayTeam":"Algeria","homeScore":3,"awayScore":1,"matchDate":"2026-09-24T14:07:11.8561108Z","status":"Completed"}</con:originalMessage>
+          </con:configuration>
+        </con:assertion>
+        <con:parameterOrder>
+          <con:entry>matchId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 9 â€“ Groovy: assert both teams in table and table sorted by pts
+       ================================================================-->
+  <!--================================================================
+       STEP 10 â€“ Groovy: load next data row and loop, or exit the loop
+       ================================================================-->
+  <!--================================================================
+       NEGATIVE TEST SCENARIOS
+       ================================================================-->
+  <!--STEP 11 â€“ POST /scores: missing required fields â†’ 400-->
+  <con:testStep type="datasourceloop" name="Repeat Loop" id="a47f918d-5287-4250-a523-9f343e718b90">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>Get Countries</dataSourceStep>
+      <targetStep>Invent Scores</targetStep>
+      <discardResults>false</discardResults>
+    </con:config>
+  </con:testStep>
+  <!--STEP 12 â€“ POST /scores: negative score values â†’ 400-->
+  <con:testStep type="restrequest" name="GET All Scores - Verify Match Listed" id="e59e2319-b989-4ce0-84f4-15173dfb51ba">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="getAllScores" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET All Scores - Verify Match Listed" id="4c3a4a26-54be-4a4c-8469-9c042edb3899" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/scores</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="54aa001f-2d17-43e3-ba6c-5f728df1ae64" name="Status 200 - OK">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c5f67140-0419-4e87-b5a4-436fe8887dc8" name="First result has matchId">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].matchId</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="b2eb90b3-6658-467b-a7df-0e9bc92668cf" name="First result has homeTeam">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].homeTeam</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--STEP 13 â€“ POST /scores: score exceeds maximum (99) â†’ 400-->
+  <con:testStep type="restrequest" name="GET League Table - Verify Teams Present" id="938733a4-8d35-476c-aa4b-8ad0ef9bd60d">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/table" methodName="getLeagueTable" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET League Table - Verify Teams Present" id="41167390-0701-4135-9c9c-988adf9301c6" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/table</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="c541b095-a459-46f2-93cc-b1ec0563bf08" name="Status 200 - OK">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="83087c68-b7a9-4e7a-981c-79e3b9f355ea" name="team field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].team</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="a91b869e-d09f-4c56-9735-f0ced0dea67f" name="points field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].points</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0e619f49-0c55-47b2-b486-16f8ea49e026" name="goalDifference field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].goalDifference</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="d10f53f3-47fc-4c10-aa2b-b08232c164b2" name="Response SLA" disabled="true">
+          <con:configuration>
+            <SLA>100</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--STEP 14 â€“ POST /scores: empty string team name â†’ 400-->
+  <con:testStep type="restrequest" name="POST Invalid Match - Missing Fields" id="43233add-dddd-4b3f-af97-b87030e7ebac">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="submitMatchResult" xsi:type="con:RestRequestStep">
+      <con:restRequest name="POST Invalid Match - Missing Fields" id="11a25264-4376-4251-aa42-bdc5c594ebe6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{
+  "homeTeam": "Brazil"
+}</con:request>
+        <con:originalUri>http://localhost/scores</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="20427c96-1aa9-40c3-9b63-bebef09d9567" name="Status 400 - Bad Request">
+          <con:settings/>
+          <con:configuration>
+            <codes>400, 404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="7dbdf4c5-098f-4c01-b004-6b288494fa34" name="Error message field exists">
+          <con:settings/>
+          <con:configuration>
+            <path>$.message</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA" id="5135b882-2c4d-4814-bbbc-82e69d6ef555" name="Response within 2000ms">
+          <con:settings/>
+          <con:configuration>
+            <sla>2000</sla>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--STEP 15 â€“ GET /scores/{matchId}: non-existent UUID â†’ 404-->
+  <con:testStep type="restrequest" name="POST Invalid Match - Negative Scores" id="8bd69dd7-5f7d-4298-9b8b-f112ccaf687b">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="submitMatchResult" xsi:type="con:RestRequestStep">
+      <con:restRequest name="POST Invalid Match - Negative Scores" id="e08d8c41-04e3-45cb-841c-fdbc430dd357" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{
+  "homeTeam": "Brazil",
+  "awayTeam": "Germany",
+  "homeScore": -1,
+  "awayScore": -3,
+  "matchDate": "2026-06-21T20:00:00Z"
+}</con:request>
+        <con:originalUri>http://localhost/scores</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="103610e8-12bf-4f2b-a471-48e045cc5d4c" name="Status 400 - Negative Scores Rejected">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0c0f084b-99f3-4338-811e-51c38c6a5529" name="Error message returned">
+          <con:settings/>
+          <con:configuration>
+            <path>$.message</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--STEP 16 â€“ GET /scores/{matchId}: malformed UUID â†’ 400 or 404-->
+  <con:testStep type="restrequest" name="POST Invalid Match - Score Exceeds Maximum" id="2299492a-8218-4ab3-bfb4-835d932aedf7">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="submitMatchResult" xsi:type="con:RestRequestStep">
+      <con:restRequest name="POST Invalid Match - Score Exceeds Maximum" id="21a3911d-f0ea-4508-8a2f-96502573c346" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{
+  "homeTeam": "England",
+  "awayTeam": "Spain",
+  "homeScore": 100,
+  "awayScore": 0,
+  "matchDate": "2026-06-22T15:00:00Z"
+}</con:request>
+        <con:originalUri>http://localhost/scores</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="cd93f188-705d-449f-810b-afabdeb8dd5c" name="Status 400 - Score Above Maximum Rejected">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8b5cf43e-cd95-452a-b6b5-4ca13b26a4c7" name="Error message returned">
+          <con:settings/>
+          <con:configuration>
+            <path>$.message</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 17 â€“ GET /table: final full schema + sort-order validation
+       ================================================================-->
+  <con:testStep type="restrequest" name="POST Invalid Match - Empty Team Name" id="1f34b5fa-8777-4a7e-8a8a-c597059cd6c6">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores" methodName="submitMatchResult" xsi:type="con:RestRequestStep">
+      <con:restRequest name="POST Invalid Match - Empty Team Name" id="6f320c0e-8e1d-4113-a6cb-99ad61bf98e2" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{
+  "homeTeam": "",
+  "awayTeam": "France",
+  "homeScore": 1,
+  "awayScore": 0,
+  "matchDate": "2026-06-23T19:00:00Z"
+}</con:request>
+        <con:originalUri>http://localhost/scores</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="6dcfb82f-dc6f-4dfd-81ae-1b77c1d2fe9e" name="Status 400 - Empty Team Name Rejected">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <!--================================================================
+       STEP 18 â€“ Groovy: final table log, sort verification, test summary
+       ================================================================-->
+  <!--TestCase-level properties used by the Groovy loop-->
+  <con:testStep type="restrequest" name="GET Non-Existent Match - 404 Check" id="a3ec792d-a111-4166-b874-fb5b99261dde">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores/{matchId}" methodName="getMatchScoreById" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET Non-Existent Match - 404 Check" id="aaa843f1-7cab-4775-a64b-4be32871056b" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/scores/</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="matchId" value="123456-123456-1234-1234-1234"/>
+        </con:parameters>
+        <con:assertion type="Valid HTTP Status Codes" id="65a0abb2-05b0-4cbe-ac8f-d6ee315e5458" name="Status 404 - Not Found">
+          <con:settings/>
+          <con:configuration>
+            <codes>404, 400
+</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA" id="c9144fa8-fc56-4d4b-8405-bb0e0f9544ad" name="Response within 2000ms">
+          <con:settings/>
+          <con:configuration>
+            <sla>2000</sla>
+          </con:configuration>
+        </con:assertion>
+        <con:parameterOrder>
+          <con:entry>matchId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GET Malformed Match ID - Error Check" id="b9eb38a9-1036-4efd-9074-c92baddd3dfc">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/scores/{matchId}" methodName="getMatchScoreById" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET Malformed Match ID - Error Check" id="9f055922-0e35-4c09-af20-36bca29bf2dd" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/scores/</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="matchId" value="abcd"/>
+        </con:parameters>
+        <con:assertion type="Valid HTTP Status Codes" id="9d9031e2-42dd-4320-ad12-ec0cbab6cbea" name="Status 400 or 404 - Malformed UUID">
+          <con:settings/>
+          <con:configuration>
+            <codes>400,404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:parameterOrder>
+          <con:entry>matchId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GET Final League Table - Full Validation" id="6fb212b3-cd9c-41cc-bdea-d4cf14eba37d">
+    <con:settings/>
+    <con:config service="WorldCupScores API" resourcePath="/table" methodName="getLeagueTable" xsi:type="con:RestRequestStep">
+      <con:restRequest name="GET Final League Table - Full Validation" id="af3fb274-0c84-402a-9957-7267b47cdaaa" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/table</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:assertion type="Valid HTTP Status Codes" id="e0523278-7b56-4744-85d3-c0b78ba55fb4" name="Status 200 - OK">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="1dfd4314-c0c2-4815-913f-20833fb88ea7" name="team field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].team</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="7daa1bc1-be4d-42a5-9ea5-240b118fb3eb" name="played field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].played</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="94c99751-2be9-4d58-8f2d-e1ba3ab9c1b7" name="won field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].won</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="ec106715-34fe-48eb-abc1-e94cb4ab20e7" name="drawn field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].drawn</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="70be8ab5-af5a-447e-bd1e-62ffd7780f34" name="lost field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].lost</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="20113b4b-091c-48c2-9e16-b06b840aaa84" name="goalsFor field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].goalsFor</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="93ab849f-2d7a-49d3-9dc4-8bd6a2725e94" name="goalsAgainst field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].goalsAgainst</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="36b77701-873d-4871-bc62-5a67c9542203" name="goalDifference field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].goalDifference</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="577fbdea-6933-4e24-9cbc-08b9ff3e383d" name="points field present">
+          <con:settings/>
+          <con:configuration>
+            <path>$[0].points</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA" id="49236138-e479-4565-a8b7-417d1dfb8c4c" name="Response within 2000ms">
+          <con:settings/>
+          <con:configuration>
+            <sla>2000</sla>
+          </con:configuration>
+        </con:assertion>
+        <con:environmentSpec>
+          <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+            <con:authProfile>Kerberos</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="goto" name="Conditional Goto" id="fc7a6fca-2191-4ca7-a619-d90a5b3b6182">
+    <con:settings/>
+    <con:config xsi:type="con:GotoStep">
+      <con:condition>
+        <con:name>Condition 1</con:name>
+        <con:type>XPATH</con:type>
+      </con:condition>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>matchDataSerialized</con:name>
+      <con:value/>
+    </con:property>
+    <con:property>
+      <con:name>dataRowIndex</con:name>
+      <con:value>0</con:value>
+    </con:property>
+    <con:property>
+      <con:name>totalDataRows</con:name>
+      <con:value>6</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

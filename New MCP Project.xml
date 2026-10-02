@@ -1,0 +1,1052 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="5ef774b7-bebc-44e7-9be1-6a5de196b8d1" created="4.1.0" activeEnvironment="Default environment" encryptionMode="Not encrypted" name="New MCP Project" projectVersion="" updated="4.1.0 2026-06-19T06:32:53Z" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:interface xsi:type="con:RestService" id="6f82b3bc-12a7-41bb-91c3-d16b7327a6a5" lastUpdated="2026-09-24T15:24:06.727+01:00" name="Connected Vehicles Services API" type="rest_ex" wadlVersion="https://swagger.io/openapiv3/specification" definitionUrl="file:/C:/Users/dominick.crosbie/WorldCup/vehicles.yaml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:description>API for managing vehicle telemetry data, remote commands, and over-the-air software updates.</con:description>
+    <con:settings id="aa46e1fd-c0d6-48c7-b65a-f261676682d4"/>
+    <con:definitionCache type="TEXT" rootPart="file:/C:/Users/dominick.crosbie/WorldCup/vehicles.yaml">
+      <con:part>
+        <con:url>file:/C:/Users/dominick.crosbie/WorldCup/vehicles.yaml</con:url>
+        <con:content>openapi: '3.1.0'
+info:
+  title: Connected Vehicles Services API
+  version: '1.0.0'
+  description: API for managing vehicle telemetry data, remote commands, and over-the-air software updates.
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /vehicles:
+    get:
+      summary: Get a list of vehicles
+      responses:
+        '200':
+          description: A list of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+              example:
+                - id: "1"
+                  make: "Toyota"
+                  model: "Camry"
+                  year: 2020
+                  type: "fuel"
+                - id: "2"
+                  make: "Honda"
+                  model: "Civic"
+                  year: 2019
+                  type: "fuel"
+                - id: "3"
+                  make: "Ford"
+                  model: "Focus"
+                  year: 2018
+                  type: "electric"
+                - id: "4"
+                  make: "Chevrolet"
+                  model: "Malibu"
+                  year: 2021
+                  type: "hybrid"
+        '500':
+          description: Server error
+    post:
+      summary: Create a new vehicle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          description: Vehicle created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Server error
+
+  /vehicles/{vehicleId}:
+    get:
+      summary: Get a vehicle by ID
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+              example:
+                id: "1"
+                make: "Toyota"
+                model: "Camry"
+                year: 2020
+                type: "fuel"
+        '404':
+          description: Vehicle not found
+        '500':
+          description: Server error
+    put:
+      summary: Update a vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '200':
+          description: Vehicle updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Vehicle not found
+        '500':
+          description: Server error
+    delete:
+      summary: Delete a vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Vehicle deleted successfully
+        '404':
+          description: Vehicle not found
+        '500':
+          description: Server error
+
+  /vehicles/{vehicleId}/commands:
+    post:
+      summary: Send a remote command to a vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteCommand'
+      responses:
+        '200':
+          description: Command sent successfully
+        '400':
+          description: Invalid command
+        '404':
+          description: Vehicle not found
+        '500':
+          description: Server error
+
+  /vehicles/{vehicleId}/software-update:
+    post:
+      summary: Initiate a software update for a vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SoftwareUpdate'
+      responses:
+        '200':
+          description: Software update initiated successfully
+        '400':
+          description: Invalid update request
+        '404':
+          description: Vehicle not found
+        '500':
+          description: Server error
+
+  /audit-logs:
+    get:
+      summary: Get a list of audit logs
+      responses:
+        '200':
+          description: A list of audit logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditLog'
+              example:
+                - id: "1"
+                  action: "CREATE"
+                  timestamp: "2023-10-01T12:00:00Z"
+                  vehicleId: "1"
+                - id: "2"
+                  action: "UPDATE"
+                  timestamp: "2023-10-02T12:00:00Z"
+                  vehicleId: "2"
+                - id: "3"
+                  action: "DELETE"
+                  timestamp: "2023-10-03T12:00:00Z"
+                  vehicleId: "3"
+                - id: "4"
+                  action: "COMMAND"
+                  timestamp: "2023-10-04T12:00:00Z"
+                  vehicleId: "4"
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    Vehicle:
+      type: object
+      required:
+        - id
+        - make
+        - model
+        - year
+        - type
+      properties:
+        id:
+          type: string
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        type:
+          type: string
+          enum: [electric, hybrid, fuel]
+    RemoteCommand:
+      type: object
+      required:
+        - commandType
+      properties:
+        commandType:
+          type: string
+          enum: [lock, unlock, start, stop]
+    SoftwareUpdate:
+      type: object
+      required:
+        - version
+      properties:
+        version:
+          type: string
+    AuditLog:
+      type: object
+      required:
+        - id
+        - action
+        - timestamp
+        - vehicleId
+      properties:
+        id:
+          type: string
+        action:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        vehicleId:
+          type: string</con:content>
+        <con:type>https://swagger.io/openapiv3/specification</con:type>
+      </con:part>
+    </con:definitionCache>
+    <con:endpoints>
+      <con:endpoint>https://api.example.com/v1</con:endpoint>
+    </con:endpoints>
+    <con:resource name="/vehicles" path="/vehicles" id="e0e3c840-89ec-4000-9cd1-e40745e0dc06">
+      <con:settings/>
+      <con:parameters/>
+      <con:method name="GET" id="245e2553-a148-472c-9655-d5a340174781" method="GET">
+        <con:description>Get a list of vehicles</con:description>
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:description>A list of vehicles</con:description>
+          <con:sampleContent>[ {
+  "id" : "1",
+  "make" : "Toyota",
+  "model" : "Camry",
+  "year" : 2020,
+  "type" : "fuel"
+}, {
+  "id" : "2",
+  "make" : "Honda",
+  "model" : "Civic",
+  "year" : 2019,
+  "type" : "fuel"
+}, {
+  "id" : "3",
+  "make" : "Ford",
+  "model" : "Focus",
+  "year" : 2018,
+  "type" : "electric"
+}, {
+  "id" : "4",
+  "make" : "Chevrolet",
+  "model" : "Malibu",
+  "year" : 2021,
+  "type" : "hybrid"
+} ]</con:sampleContent>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:request name="Request 1" id="569f5d22-9af8-445f-b6fe-a4b29eea1c79" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+      <con:method name="POST" id="d6ef491c-7b5f-401a-9b4d-2612555224e0" method="POST">
+        <con:description>Create a new vehicle</con:description>
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="RESPONSE">
+          <con:status>201</con:status>
+          <con:params/>
+          <con:description>Vehicle created successfully</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>400</con:status>
+          <con:params/>
+          <con:description>Invalid input</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:representation type="REQUEST">
+          <con:mediaType>application/json</con:mediaType>
+          <con:params/>
+          <con:sampleContent>{
+  "id" : "string",
+  "make" : "string",
+  "model" : "string",
+  "year" : 0,
+  "type" : "electric"
+}</con:sampleContent>
+        </con:representation>
+        <con:request name="Request 1" id="ef9d5f42-b4e1-4c58-9f81-515f478ae81f" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:request>{\r
+  "id" : "string",\r
+  "make" : "string",\r
+  "model" : "string",\r
+  "year" : 0,\r
+  "type" : "electric"\r
+}</con:request>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="/vehicles/{vehicleId}" path="/vehicles/{vehicleId}" id="f7049a1a-679d-4838-8e78-a54bda317b7a">
+      <con:settings/>
+      <con:parameters/>
+      <con:method name="GET" id="b11f7acf-5a00-44af-8739-7a934532e196" method="GET">
+        <con:description>Get a vehicle by ID</con:description>
+        <con:settings/>
+        <con:parameters>
+          <con:parameter required="true">
+            <con:name>vehicleId</con:name>
+            <con:style>TEMPLATE</con:style>
+          </con:parameter>
+        </con:parameters>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:description>A single vehicle</con:description>
+          <con:sampleContent>{
+  "id" : "1",
+  "make" : "Toyota",
+  "model" : "Camry",
+  "year" : 2020,
+  "type" : "fuel"
+}</con:sampleContent>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>404</con:status>
+          <con:params/>
+          <con:description>Vehicle not found</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:request name="Request 1" id="a66f60af-c347-493d-af6c-9f005eb1f400" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+      <con:method name="DELETE" id="2aac1775-5bd3-4538-902a-9ac91c630f7c" method="DELETE">
+        <con:description>Delete a vehicle</con:description>
+        <con:settings/>
+        <con:parameters>
+          <con:parameter required="true">
+            <con:name>vehicleId</con:name>
+            <con:style>TEMPLATE</con:style>
+          </con:parameter>
+        </con:parameters>
+        <con:representation type="RESPONSE">
+          <con:status>204</con:status>
+          <con:params/>
+          <con:description>Vehicle deleted successfully</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>404</con:status>
+          <con:params/>
+          <con:description>Vehicle not found</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:request name="Request 1" id="a0cb09bb-4ea3-4b36-8524-6f9422cc7255" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+      <con:method name="PUT" id="d06c5dbe-36e7-4eeb-b8fc-d1c4f559b14f" method="PUT">
+        <con:description>Update a vehicle</con:description>
+        <con:settings/>
+        <con:parameters>
+          <con:parameter required="true">
+            <con:name>vehicleId</con:name>
+            <con:style>TEMPLATE</con:style>
+          </con:parameter>
+        </con:parameters>
+        <con:representation type="RESPONSE">
+          <con:status>200</con:status>
+          <con:params/>
+          <con:description>Vehicle updated successfully</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>400</con:status>
+          <con:params/>
+          <con:description>Invalid input</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>404</con:status>
+          <con:params/>
+          <con:description>Vehicle not found</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:representation type="REQUEST">
+          <con:mediaType>application/json</con:mediaType>
+          <con:params/>
+          <con:sampleContent>{
+  "id" : "string",
+  "make" : "string",
+  "model" : "string",
+  "year" : 0,
+  "type" : "electric"
+}</con:sampleContent>
+        </con:representation>
+        <con:request name="Request 1" id="fac8e40f-435e-46e5-bcc6-c9a000075983" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:request>{\r
+  "id" : "string",\r
+  "make" : "string",\r
+  "model" : "string",\r
+  "year" : 0,\r
+  "type" : "electric"\r
+}</con:request>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="/vehicles/{vehicleId}/commands" path="/vehicles/{vehicleId}/commands" id="dd1eaa3c-bd6a-45db-b4ab-2c01b55f2105">
+      <con:settings/>
+      <con:parameters/>
+      <con:method name="POST" id="00935875-e4ef-45b3-840d-d0c28ecfd021" method="POST">
+        <con:description>Send a remote command to a vehicle</con:description>
+        <con:settings/>
+        <con:parameters>
+          <con:parameter required="true">
+            <con:name>vehicleId</con:name>
+            <con:style>TEMPLATE</con:style>
+          </con:parameter>
+        </con:parameters>
+        <con:representation type="RESPONSE">
+          <con:status>200</con:status>
+          <con:params/>
+          <con:description>Command sent successfully</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>400</con:status>
+          <con:params/>
+          <con:description>Invalid command</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>404</con:status>
+          <con:params/>
+          <con:description>Vehicle not found</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:representation type="REQUEST">
+          <con:mediaType>application/json</con:mediaType>
+          <con:params/>
+          <con:sampleContent>{
+  "commandType" : "lock"
+}</con:sampleContent>
+        </con:representation>
+        <con:request name="Request 1" id="59b6c227-5535-43f2-a1bd-24b9902879c9" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:request>{\r
+  "commandType" : "lock"\r
+}</con:request>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="/vehicles/{vehicleId}/software-update" path="/vehicles/{vehicleId}/software-update" id="28f6e5e4-75fc-4001-80d4-bd70bf6fccff">
+      <con:settings/>
+      <con:parameters/>
+      <con:method name="POST" id="9f0eb74c-15c6-4112-9265-e3a6b7482bdf" method="POST">
+        <con:description>Initiate a software update for a vehicle</con:description>
+        <con:settings/>
+        <con:parameters>
+          <con:parameter required="true">
+            <con:name>vehicleId</con:name>
+            <con:style>TEMPLATE</con:style>
+          </con:parameter>
+        </con:parameters>
+        <con:representation type="RESPONSE">
+          <con:status>200</con:status>
+          <con:params/>
+          <con:description>Software update initiated successfully</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>400</con:status>
+          <con:params/>
+          <con:description>Invalid update request</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>404</con:status>
+          <con:params/>
+          <con:description>Vehicle not found</con:description>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:representation type="REQUEST">
+          <con:mediaType>application/json</con:mediaType>
+          <con:params/>
+          <con:sampleContent>{
+  "version" : "string"
+}</con:sampleContent>
+        </con:representation>
+        <con:request name="Request 1" id="e7d14339-3768-432e-9863-12663be497dc" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:request>{\r
+  "version" : "string"\r
+}</con:request>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="/audit-logs" path="/audit-logs" id="24875900-e4a1-4799-9b0b-5ba99163fbf3">
+      <con:settings/>
+      <con:parameters/>
+      <con:method name="GET" id="23c4b751-ffe9-4c02-ab2f-b77fc2b3b9d3" method="GET">
+        <con:description>Get a list of audit logs</con:description>
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:description>A list of audit logs</con:description>
+          <con:sampleContent>[ {
+  "id" : "1",
+  "action" : "CREATE",
+  "timestamp" : "2023-10-01T12:00:00Z",
+  "vehicleId" : "1"
+}, {
+  "id" : "2",
+  "action" : "UPDATE",
+  "timestamp" : "2023-10-02T12:00:00Z",
+  "vehicleId" : "2"
+}, {
+  "id" : "3",
+  "action" : "DELETE",
+  "timestamp" : "2023-10-03T12:00:00Z",
+  "vehicleId" : "3"
+}, {
+  "id" : "4",
+  "action" : "COMMAND",
+  "timestamp" : "2023-10-04T12:00:00Z",
+  "vehicleId" : "4"
+} ]</con:sampleContent>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:status>500</con:status>
+          <con:params/>
+          <con:description>Server error</con:description>
+        </con:representation>
+        <con:request name="Request 1" id="d8f91d30-a761-4e2d-b668-10217dd7a48e" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>https://api.example.com/v1</con:endpoint>
+          <con:parameters/>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:interface>
+  <con:testSuite id="aca75dea-38c5-4f4c-b531-dfbb8ea5ed04" name="Connected Vehicles Services API - all tests">
+    <con:settings id="aeb7289c-d878-474a-9b39-277162836ff6"/>
+    <con:runType>SEQUENTIAL</con:runType>
+    <con:testCase id="099be8e8-29e6-44b7-8502-f750a6c8b0e1" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/vehicles Test Case" searchProperties="true" timeout="0">
+      <con:description>The test case generated for the REST resource [/vehicles] located at [/vehicles]</con:description>
+      <con:settings/>
+      <con:testStep type="restrequest" name="Request 1" id="0c4599d8-ff67-4325-8f9f-3c3ed5f329ab">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1" id="569f5d22-9af8-445f-b6fe-a4b29eea1c79" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request/>
+            <con:assertion type="Valid HTTP Status Codes" id="4f129ecc-db7c-42f6-bf1f-a37d6b3ec651" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="49539361-ee52-43d2-9433-e72ae961f173" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="f11a4ef4-c804-45d6-8c08-07b56045473f" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Request 1 2" id="418cc98d-32ee-4e8a-ad8a-a1b122f406e9">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1 2" id="ef9d5f42-b4e1-4c58-9f81-515f478ae81f" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request>{\r
+  "id" : "string",\r
+  "make" : "string",\r
+  "model" : "string",\r
+  "year" : 0,\r
+  "type" : "electric"\r
+}</con:request>
+            <con:assertion type="Valid HTTP Status Codes" id="3edba77d-9b8e-428d-aec0-5ce73c7f8a52" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>201</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="f924f6fd-9cbe-46a1-8288-329a993dd03b" name="Valid HTTP Status Codes 2">
+              <con:settings/>
+              <con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="0613e890-009e-4d4f-80c0-6400722cbc62" name="Valid HTTP Status Codes 3">
+              <con:settings/>
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="c69bebfc-3b0e-4170-b921-6a0b90e70617" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="4c64c49b-7eaa-4cc9-9a1e-9b71bb6f65d0" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+      <con:reportParameters/>
+      <con:tagId>09d4e7e0-a144-4dae-b7f0-946c4025bb73</con:tagId>
+    </con:testCase>
+    <con:testCase id="864efb8a-e65f-4c05-b98e-2ef3c2cae7fd" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/vehicles/{vehicleId} Test Case" searchProperties="true" timeout="0">
+      <con:description>The test case generated for the REST resource [/vehicles/{vehicleId}] located at [/vehicles/{vehicleId}]</con:description>
+      <con:settings/>
+      <con:testStep type="restrequest" name="Request 1" id="75298305-fae9-4043-a151-12ecee596ec6">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles/{vehicleId}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1" id="a66f60af-c347-493d-af6c-9f005eb1f400" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request/>
+            <con:assertion type="Valid HTTP Status Codes" id="8024781c-71a8-46b1-8768-94b428c0d568" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="2f55d0d1-ab4a-42b6-b3b4-1e524921afd8" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="68a0dbfa-c15f-4154-a363-96d0f9a91762" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Request 1 2" id="7d13da60-bce7-4552-acf8-1a7dbcb709b3">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles/{vehicleId}" methodName="DELETE" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1 2" id="a0cb09bb-4ea3-4b36-8524-6f9422cc7255" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request/>
+            <con:assertion type="Valid HTTP Status Codes" id="b10bebd7-3fe1-49e1-a317-48bb52c8e92c" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>204</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="6c7913eb-4fd8-45af-8545-3166512f00a3" name="Valid HTTP Status Codes 2">
+              <con:settings/>
+              <con:configuration>
+                <codes>404</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="90bd7ce1-83c4-453b-9639-b5761fc18507" name="Valid HTTP Status Codes 3">
+              <con:settings/>
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="694404ef-f93d-4c86-b4b9-37992cc51814" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="7c8de492-eb41-482f-ba62-05d0d6a3db5c" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Request 1 3" id="efcd27db-50a0-4aa7-9168-f65e48bcdff7">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles/{vehicleId}" methodName="PUT" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1 3" id="fac8e40f-435e-46e5-bcc6-c9a000075983" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request>{\r
+  "id" : "string",\r
+  "make" : "string",\r
+  "model" : "string",\r
+  "year" : 0,\r
+  "type" : "electric"\r
+}</con:request>
+            <con:assertion type="Valid HTTP Status Codes" id="40a488d8-fed1-4261-8770-6f951c1ace12" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="f6ddbf5f-4bd7-4334-a065-11974a7e8786" name="Valid HTTP Status Codes 2">
+              <con:settings/>
+              <con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="f1cedda4-3ef7-41c7-886b-947fa0bba7d0" name="Valid HTTP Status Codes 3">
+              <con:settings/>
+              <con:configuration>
+                <codes>404</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="b7625fba-e205-43e6-a883-be7122aed30d" name="Valid HTTP Status Codes 4">
+              <con:settings/>
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="427aca6e-1df3-42c5-8cb9-af80c415c300" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="438ce89d-f918-4f3c-ae6f-6358ffecf030" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+      <con:reportParameters/>
+      <con:tagId>09d4e7e0-a144-4dae-b7f0-946c4025bb73</con:tagId>
+    </con:testCase>
+    <con:testCase id="8ea88593-392c-4441-b297-bb04465cf065" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/vehicles/{vehicleId}/commands Test Case" searchProperties="true" timeout="0">
+      <con:description>The test case generated for the REST resource [/vehicles/{vehicleId}/commands] located at [/vehicles/{vehicleId}/commands]</con:description>
+      <con:settings/>
+      <con:testStep type="restrequest" name="Request 1" id="294c969c-635a-4dec-8cbc-fe20c77c670e">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles/{vehicleId}/commands" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1" id="59b6c227-5535-43f2-a1bd-24b9902879c9" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request>{\r
+  "commandType" : "lock"\r
+}</con:request>
+            <con:assertion type="Valid HTTP Status Codes" id="f79cd8a5-a837-4d16-96d4-938d472a7381" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="2e277ff9-e8b5-4c4f-9aaf-9268d79bd191" name="Valid HTTP Status Codes 2">
+              <con:settings/>
+              <con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="79b7457e-8fd5-40fd-97c7-9705c977548e" name="Valid HTTP Status Codes 3">
+              <con:settings/>
+              <con:configuration>
+                <codes>404</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="1b1bd898-ba3b-4b26-a4c2-6275402ab362" name="Valid HTTP Status Codes 4">
+              <con:settings/>
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="4a4b8e02-7857-410a-bae6-e2160392462d" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="2914a4df-2ed1-4a27-b7d2-a4e63d2f5134" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+      <con:reportParameters/>
+      <con:tagId>09d4e7e0-a144-4dae-b7f0-946c4025bb73</con:tagId>
+    </con:testCase>
+    <con:testCase id="7ebef71b-bbca-499a-9fbf-152482b06d11" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/vehicles/{vehicleId}/software-update Test Case" searchProperties="true" timeout="0">
+      <con:description>The test case generated for the REST resource [/vehicles/{vehicleId}/software-update] located at [/vehicles/{vehicleId}/software-update]</con:description>
+      <con:settings/>
+      <con:testStep type="restrequest" name="Request 1" id="ee5ffb3a-0a9e-4232-a873-a31f032a952c">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/vehicles/{vehicleId}/software-update" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1" id="e7d14339-3768-432e-9863-12663be497dc" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request>{\r
+  "version" : "string"\r
+}</con:request>
+            <con:assertion type="Valid HTTP Status Codes" id="a168bbf1-7012-4f66-ad39-3f2eddaa8faa" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="374aeaf5-b7c3-43aa-a576-69936dd118ac" name="Valid HTTP Status Codes 2">
+              <con:settings/>
+              <con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="f51020c0-ded5-4655-95b5-20060c652bbb" name="Valid HTTP Status Codes 3">
+              <con:settings/>
+              <con:configuration>
+                <codes>404</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" id="5b000030-b935-4014-8a0b-7db5ab9e62f4" name="Valid HTTP Status Codes 4">
+              <con:settings/>
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="2724156c-84fa-4e78-bd37-54543e8f643e" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="7a071029-1de2-472c-95a1-b8d69205fbc8" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+      <con:reportParameters/>
+      <con:tagId>09d4e7e0-a144-4dae-b7f0-946c4025bb73</con:tagId>
+    </con:testCase>
+    <con:testCase id="ce1974ff-45e7-4160-8459-5c0e55e5c888" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/audit-logs Test Case" searchProperties="true" timeout="0">
+      <con:description>The test case generated for the REST resource [/audit-logs] located at [/audit-logs]</con:description>
+      <con:settings/>
+      <con:testStep type="restrequest" name="Request 1" id="4410ab96-c3e4-4cb2-aa65-6e04cf2e1036">
+        <con:settings/>
+        <con:config service="Connected Vehicles Services API" resourcePath="/audit-logs" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1" id="d8f91d30-a761-4e2d-b668-10217dd7a48e" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>https://api.example.com/v1</con:endpoint>
+            <con:request/>
+            <con:assertion type="Valid HTTP Status Codes" id="097878ab-f477-4da6-8732-de3231a936e1" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SwaggerComplianceAssertion" id="4ec9eae1-8ad8-4f13-a8f1-9e0cc66818f5" name="Swagger Compliance Assertion">
+              <con:configuration/>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="20ce3210-85ee-4678-b473-656a1f91d435" name="Response SLA">
+              <con:configuration/>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:parameters/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+      <con:reportParameters/>
+      <con:tagId>09d4e7e0-a144-4dae-b7f0-946c4025bb73</con:tagId>
+    </con:testCase>
+    <con:properties/>
+    <con:reportParameters/>
+  </con:testSuite>
+  <con:properties/>
+  <con:wssContainer/>
+  <con:databaseConnectionContainer/>
+  <con:jmsConnectionContainer/>
+  <con:oAuth2ProfileContainer/>
+  <con:oAuth1ProfileContainer/>
+  <con:reporting>
+    <con:xmlTemplates/>
+    <con:parameters/>
+  </con:reporting>
+  <con:eventHandlers type="RequestFilter.filterRequest" name="RequestFilter.filterRequest">
+    <con:script>// Sample event script to add custom HTTP header to all outgoing REST, SOAP and HTTP(S) calls
+// This code is often used for adding custom authentication to ReadyAPI functional tests
+
+// If hardcoding the token, uncomment and change line 5
+// token = '4567'
+
+// If your token is parameterized in Project level custom property, uncomment line 8
+// token = request.parent.testCase.testSuite.project.getProperty('auth_token').getValue()
+
+// To modify all outgoing calls, remove comments from lines 11 to 16
+// headers = request.requestHeaders
+// if (headers.containsKey('auth_token2') == false) {
+//   headers.put('auth_token2', token)
+//   request.requestHeaders = headers
+// }</con:script>
+  </con:eventHandlers>
+  <con:eventHandlers type="TestRunListener.afterStep" name="TestRunListener.afterStep">
+    <con:script>// Save all test step results into files
+// Change the directory path in line 5 to a location where you want to store details
+// then uncomment lines 5 to 10
+
+// filePath = 'C:\\tempOutputDirectory\\'
+// fos = new java.io.FileOutputStream(filePath + testStepResult.testStep.label + '.txt', true)
+// pw = new java.io.PrintWriter(fos)
+// testStepResult.writeTo(pw)
+// pw.close()
+// fos.close()</con:script>
+  </con:eventHandlers>
+  <con:authRepository/>
+  <con:tags>
+    <con:tag>
+      <con:id>09d4e7e0-a144-4dae-b7f0-946c4025bb73</con:id>
+      <con:name>auto-generated</con:name>
+    </con:tag>
+  </con:tags>
+</con:soapui-project>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/user" path="/user" id="4f00d8af-1601-4b7a-ae81-87f0c64ead31">
+  <con:settings>
+    <con:setting id="4f00d8af-1601-4b7a-ae81-87f0c64ead31fileName">%2Fuser</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="createUser" id="c03eacf7-f033-42c4-ac4b-5705806603bc" method="POST">
+    <con:description>This can only be done by the logged in user.</con:description>
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="REQUEST">
+      <con:mediaType>*/*</con:mediaType>
+      <con:params/>
+    </con:representation>
+    <con:request name="Request 1" id="e6acfeef-9e21-429f-b364-bb99b2514d8d" mediaType="*/*">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:environmentSpec>
+      <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+      <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:method>
+  <con:environmentSpec>
+    <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:resource>

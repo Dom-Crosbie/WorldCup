@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ebfa0d6d-4df1-4e6c-9fe5-90e96b8bb788" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/leases/{leaseId} Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/leases/{leaseId}] located at [/leases/{leaseId}]</con:description>
+  <con:settings>
+    <con:setting id="ebfa0d6d-4df1-4e6c-9fe5-90e96b8bb788fileName">%2Fleases%2F%7BleaseId%7D-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="d110d5f2-cd2d-4a12-8d3d-29e156fa5e59">
+    <con:settings/>
+    <con:config service="Severin Commercial Lease Agreements API" resourcePath="/leases/{leaseId}" methodName="getLeaseById" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="02770eea-933d-4f7c-9756-74e3a63e0873" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 1 2" id="088af860-f0d2-42e2-9920-0418240657c5">
+    <con:settings/>
+    <con:config service="Severin Commercial Lease Agreements API" resourcePath="/leases/{leaseId}" methodName="deleteLease" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1 2" id="3f7d3886-fe15-4810-8a88-011fb633adf6" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

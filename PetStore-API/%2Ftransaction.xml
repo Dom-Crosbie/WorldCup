@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config" name="/table" path="/table" id="84a1ea58-f8eb-42bc-8901-1d6f57b0032b">
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/transaction" path="/transaction" id="c5fbf36e-b676-4903-b4ae-f47e6941de7b">
   <con:settings>
-    <con:setting id="84a1ea58-f8eb-42bc-8901-1d6f57b0032bfileName">%2Ftable</con:setting>
+    <con:setting id="c5fbf36e-b676-4903-b4ae-f47e6941de7bfileName">%2Ftransaction</con:setting>
   </con:settings>
   <con:parameters/>
-  <con:method name="getLeagueTable" id="11ab6d92-fb72-44eb-865c-692a14faa0ba" method="GET">
-    <con:description>Returns the current league standings table</con:description>
+  <con:method name="createTransaction" id="a5ec5e32-d232-444c-b9d4-d0a460b16fa2" method="POST">
+    <con:description>Create a transaction for an account</con:description>
     <con:settings/>
     <con:parameters/>
-    <con:representation type="RESPONSE" id="">
+    <con:representation type="RESPONSE">
       <con:mediaType>application/json</con:mediaType>
       <con:status>200</con:status>
       <con:params/>
-      <con:description>A list of league standings</con:description>
-      <con:sampleContent>[ {
-  "team" : "Brazil",
-  "played" : 5,
-  "won" : 4,
-  "drawn" : 1,
-  "lost" : 0,
-  "goalsFor" : 12,
-  "goalsAgainst" : 3,
-  "goalDifference" : 9,
-  "points" : 12
-} ]</con:sampleContent>
+      <con:description>successful operation</con:description>
+      <con:sampleContent>{
+  "id" : 0,
+  "accountId" : 0,
+  "amount" : 0,
+  "transactionDate" : "2015-07-20T15:49:04-07:00",
+  "status" : "active",
+  "complete" : false
+}</con:sampleContent>
     </con:representation>
-    <con:request name="Request 1" id="96634fc0-a35d-4a67-a073-629a787f2f64" mediaType="application/json">
-      <con:description xsi:nil="true"/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>successful operation</con:description>
+      <con:sampleContent><![CDATA[<Transaction>
+   <id>0</id>
+   <accountId>0</accountId>
+   <amount>0</amount>
+   <transactionDate>2015-07-20T15:49:04-07:00</transactionDate>
+   <status>active</status>
+   <complete>false</complete>
+</Transaction>]]></con:sampleContent>
+    </con:representation>
+    <con:representation type="REQUEST">
+      <con:mediaType>*/*</con:mediaType>
+      <con:params/>
+    </con:representation>
+    <con:request name="Request 1" id="17fa0c0c-2e8d-422b-a5cf-0bf9b2bdae71" mediaType="*/*">
       <con:settings/>
-      <con:endpoint>http://localhost:6200</con:endpoint>
-      <con:request/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
       <con:credentials>
         <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
         <con:authType>No Authorization</con:authType>
       </con:credentials>
       <con:parameters/>
       <con:environmentSpec>
-        <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
-          <con:authProfile>Kerberos</con:authProfile>
-        </con:entry>
         <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
           <con:authProfile>Inherit From Parent</con:authProfile>
         </con:entry>
@@ -48,9 +58,6 @@
       </con:environmentSpec>
     </con:request>
     <con:environmentSpec>
-      <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
-        <con:authProfile>Inherit From Parent</con:authProfile>
-      </con:entry>
       <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
         <con:authProfile>Inherit From Parent</con:authProfile>
       </con:entry>
@@ -60,9 +67,6 @@
     </con:environmentSpec>
   </con:method>
   <con:environmentSpec>
-    <con:entry environmentId="bc5ca075-d2a7-46b5-9adf-2d778afa76e3">
-      <con:authProfile>Inherit From Parent</con:authProfile>
-    </con:entry>
     <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
       <con:authProfile>Inherit From Parent</con:authProfile>
     </con:entry>

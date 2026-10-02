@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="c7157fb7-bcc9-42fa-a58b-a1ce5d58b547" name="Vehicle API Tests">
+  <con:settings id="97e89a2f-c933-4750-9901-ea364c4943d5">
+    <con:setting id="c7157fb7-bcc9-42fa-a58b-a1ce5d58b547fileName">Vehicle-API-Tests</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testSuite>

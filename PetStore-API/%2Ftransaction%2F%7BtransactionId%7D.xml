@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/transaction/{transactionId}" path="/transaction/{transactionId}" id="cc4d74c1-bc71-4933-bbe3-b8a44a9b86ac">
+  <con:settings>
+    <con:setting id="cc4d74c1-bc71-4933-bbe3-b8a44a9b86acfileName">%2Ftransaction%2F%7BtransactionId%7D</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="getTransactionById" id="80996bce-5fb2-4be9-9929-dba7fec6d675" method="GET">
+    <con:description>For valid response try integer IDs with value >= 1 and &lt;= 1000.\ \ Other values will generated exceptions</con:description>
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>transactionId</con:name>
+        <con:style>TEMPLATE</con:style>
+        <con:description>ID of account that needs to be fetched</con:description>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>successful operation</con:description>
+      <con:sampleContent>{
+  "id" : 0,
+  "accountId" : 0,
+  "amount" : 0,
+  "transactionDate" : "2015-07-20T15:49:04-07:00",
+  "status" : "active",
+  "complete" : false
+}</con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>successful operation</con:description>
+      <con:sampleContent><![CDATA[<Transaction>
+   <id>0</id>
+   <accountId>0</accountId>
+   <amount>0</amount>
+   <transactionDate>2015-07-20T15:49:04-07:00</transactionDate>
+   <status>active</status>
+   <complete>false</complete>
+</Transaction>]]></con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="41cc1d68-3a60-4cbc-ad9f-a7e32c61eb58" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:environmentSpec>
+      <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+      <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:method>
+  <con:method name="deleteTransaction" id="e726a2a3-b5ea-4adc-a6c7-e22465ea03aa" method="DELETE">
+    <con:description>For valid response try integer IDs with positive integer value.\ \ Negative or non-integer values will generate API errors</con:description>
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>transactionId</con:name>
+        <con:style>TEMPLATE</con:style>
+        <con:description>ID of the transaction that needs to be deleted</con:description>
+      </con:parameter>
+    </con:parameters>
+    <con:request name="Request 1" id="11d759b1-71cd-4a9b-b3e8-ba03625e3e60" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:environmentSpec>
+      <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+      <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:method>
+  <con:environmentSpec>
+    <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:resource>

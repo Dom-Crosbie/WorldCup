@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3d2a5e40-95ea-4bcd-9fbf-dc7720c2affc" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/logout Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/logout] located at [/logout]</con:description>
+  <con:settings>
+    <con:setting id="3d2a5e40-95ea-4bcd-9fbf-dc7720c2affcfileName">%2Flogout-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="7fd9de73-9964-4ab8-a0b6-6bec66737a7b">
+    <con:settings/>
+    <con:config service="Sample Authentication and Payment API" resourcePath="/logout" methodName="logoutUser" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="e314aa4f-7e57-4ef9-9cee-6bd68c88a2c6" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>/</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

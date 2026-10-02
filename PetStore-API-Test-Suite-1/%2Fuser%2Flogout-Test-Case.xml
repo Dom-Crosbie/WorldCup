@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="795b332d-0702-4b23-a223-986f02f01e30" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/user/logout Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/user/logout] located at [/user/logout]</con:description>
+  <con:settings>
+    <con:setting id="795b332d-0702-4b23-a223-986f02f01e30fileName">%2Fuser%2Flogout-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="cd19abd6-ef3e-4f0b-978d-a5a9f7a7bc7c">
+    <con:settings/>
+    <con:config service="PetStore API" resourcePath="/user/logout" methodName="logoutUser" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="c843e14d-55c8-4351-878a-b7501e275e60" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:testCase>

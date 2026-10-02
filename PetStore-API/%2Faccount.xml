@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/account" path="/account" id="fbf16551-5758-4814-a23a-9a70b1242255">
+  <con:settings>
+    <con:setting id="fbf16551-5758-4814-a23a-9a70b1242255fileName">%2Faccount</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="openAccount" id="37c61163-a216-41f6-8b2a-a259a5a5f9c8" method="POST">
+    <con:description>Open a new account</con:description>
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="REQUEST">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+      <con:sampleContent>{
+  "id" : 0,
+  "accountType" : {
+    "id" : 0,
+    "name" : "string"
+  },
+  "name" : "Joe Bloggs",
+  "photoUrls" : [ "string" ],
+  "tags" : [ {
+    "id" : 0,
+    "name" : "string"
+  } ],
+  "status" : "open"
+}</con:sampleContent>
+    </con:representation>
+    <con:representation type="REQUEST">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:params/>
+      <con:sampleContent><![CDATA[<Account>
+   <id>0</id>
+   <AccountType>
+      <id>0</id>
+      <name>string</name>
+   </AccountType>
+   <name>Joe Bloggs</name>
+   <photoUrl>
+      <photoUrl>string</photoUrl>
+   </photoUrl>
+   <tag>
+      <Tag>
+         <id>0</id>
+         <name>string</name>
+      </Tag>
+   </tag>
+   <status>open</status>
+</Account>]]></con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="abfab1ed-1552-4131-9ad7-c2daaccc80bf" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:request>{\r
+  "id" : 0,\r
+  "accountType" : {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  },\r
+  "name" : "Joe Bloggs",\r
+  "photoUrls" : [ "string" ],\r
+  "tags" : [ {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  } ],\r
+  "status" : "open"\r
+}</con:request>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:request name="Request 2" id="cd57e9c3-a9d3-40b8-b6d6-55f7f9dd6224" mediaType="application/xml">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:request><![CDATA[<Account>\r
+   <id>0</id>\r
+   <AccountType>\r
+      <id>0</id>\r
+      <name>string</name>\r
+   </AccountType>\r
+   <name>Joe Bloggs</name>\r
+   <photoUrl>\r
+      <photoUrl>string</photoUrl>\r
+   </photoUrl>\r
+   <tag>\r
+      <Tag>\r
+         <id>0</id>\r
+         <name>string</name>\r
+      </Tag>\r
+   </tag>\r
+   <status>open</status>\r
+</Account>]]></con:request>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:environmentSpec>
+      <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+      <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:method>
+  <con:method name="updateAccount" id="0c4d8647-dc85-4858-b93a-8570a5d23b15" method="PUT">
+    <con:description>Update an existing account</con:description>
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="REQUEST">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+      <con:sampleContent>{
+  "id" : 0,
+  "accountType" : {
+    "id" : 0,
+    "name" : "string"
+  },
+  "name" : "Joe Bloggs",
+  "photoUrls" : [ "string" ],
+  "tags" : [ {
+    "id" : 0,
+    "name" : "string"
+  } ],
+  "status" : "open"
+}</con:sampleContent>
+    </con:representation>
+    <con:representation type="REQUEST">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:params/>
+      <con:sampleContent><![CDATA[<Account>
+   <id>0</id>
+   <AccountType>
+      <id>0</id>
+      <name>string</name>
+   </AccountType>
+   <name>Joe Bloggs</name>
+   <photoUrl>
+      <photoUrl>string</photoUrl>
+   </photoUrl>
+   <tag>
+      <Tag>
+         <id>0</id>
+         <name>string</name>
+      </Tag>
+   </tag>
+   <status>open</status>
+</Account>]]></con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="ba2d6f6a-d139-44d5-88ad-e6125578bda6" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:request>{\r
+  "id" : 0,\r
+  "accountType" : {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  },\r
+  "name" : "Joe Bloggs",\r
+  "photoUrls" : [ "string" ],\r
+  "tags" : [ {\r
+    "id" : 0,\r
+    "name" : "string"\r
+  } ],\r
+  "status" : "open"\r
+}</con:request>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:request name="Request 2" id="4ff36b4f-4109-4838-955c-d957e9dc7cdc" mediaType="application/xml">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:request><![CDATA[<Account>\r
+   <id>0</id>\r
+   <AccountType>\r
+      <id>0</id>\r
+      <name>string</name>\r
+   </AccountType>\r
+   <name>Joe Bloggs</name>\r
+   <photoUrl>\r
+      <photoUrl>string</photoUrl>\r
+   </photoUrl>\r
+   <tag>\r
+      <Tag>\r
+         <id>0</id>\r
+         <name>string</name>\r
+      </Tag>\r
+   </tag>\r
+   <status>open</status>\r
+</Account>]]></con:request>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:environmentSpec>
+      <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+      <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:method>
+  <con:environmentSpec>
+    <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:resource>

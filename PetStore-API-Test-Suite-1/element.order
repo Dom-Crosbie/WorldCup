@@ -1,0 +1,5 @@
+%2Faccount-Test-Case.xml
+%2Ftransaction-Test-Case.xml
+%2Ftransaction%2F%7BtransactionId%7D-Test-Case.xml
+%2Fuser-Test-Case.xml
+%2Fuser%2Flogout-Test-Case.xml

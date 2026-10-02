@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9a05ec41-f90f-41b1-98f7-532f26e9da2f" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/refunds Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/refunds] located at [/refunds]</con:description>
+  <con:settings>
+    <con:setting id="9a05ec41-f90f-41b1-98f7-532f26e9da2ffileName">%2Frefunds-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="Request 1" id="bb99b0d4-449f-4f02-9547-3f903b6358b0">
+    <con:settings/>
+    <con:config service="Sample Authentication and Payment API" resourcePath="/refunds" methodName="handleRefund" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="cdf1459d-706a-4f47-9a64-903ff6973e72" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>/</con:endpoint>
+        <con:request>{\r
+  "paymentId" : "string",\r
+  "amount" : 1.1\r
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

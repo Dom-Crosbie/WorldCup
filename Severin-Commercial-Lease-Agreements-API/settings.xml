@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:interface xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RestService" id="91d156cf-140d-4ded-a390-c341ae356bb5" lastUpdated="2026-10-02T12:25:19.004+01:00" name="Severin Commercial Lease Agreements API" type="rest_ex" wadlVersion="https://swagger.io/openapiv3/specification" definitionUrl="file:/C:/Users/dominick.crosbie/Downloads/domcrosbie-cc0-Severin-1.2-resolved-flattened.json">
+  <con:description>API to manage commercial lease agreements for Severin company</con:description>
+  <con:settings id="9ed41101-507f-4e84-85e1-8ffe8485ed1c">
+    <con:setting id="91d156cf-140d-4ded-a390-c341ae356bb5fileName">Severin-Commercial-Lease-Agreements-API</con:setting>
+  </con:settings>
+  <con:definitionCache type="TEXT" rootPart="file:/C:/Users/dominick.crosbie/Downloads/domcrosbie-cc0-Severin-1.2-resolved-flattened.json">
+    <con:part>
+      <con:url>file:/C:/Users/dominick.crosbie/Downloads/domcrosbie-cc0-Severin-1.2-resolved-flattened.json</con:url>
+      <con:content>{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Severin Commercial Lease Agreements API",
+    "description": "API to manage commercial lease agreements for Severin company",
+    "version": "1.2"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/domcrosbie-cc0/Severin/1.2",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "http://localhost:6200"
+    }
+  ],
+  "paths": {
+    "/leases": {
+      "get": {
+        "summary": "Retrieve all commercial lease agreements",
+        "operationId": "getAllLeases",
+        "responses": {
+          "200": {
+            "description": "A list of lease agreements",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "maxItems": 100,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lease"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new commercial lease agreement",
+        "operationId": "createLease",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLeaseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Lease agreement created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lease"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request due to validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/leases/{leaseId}": {
+      "get": {
+        "summary": "Retrieve a specific lease agreement by ID",
+        "operationId": "getLeaseById",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "987e6543-e21b-12d3-a456-426614174999"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lease agreement found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lease"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lease agreement not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete a lease agreement by ID",
+        "operationId": "deleteLease",
+        "parameters": [
+          {
+            "name": "leaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "987e6543-e21b-12d3-a456-426614174999"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Lease agreement deleted successfully"
+          },
+          "404": {
+            "description": "Lease agreement not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Match": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "homeTeam": {
+            "type": "string",
+            "example": "Brazil"
+          },
+          "awayTeam": {
+            "type": "string",
+            "example": "Germany"
+          },
+          "homeScore": {
+            "type": "integer",
+            "example": 2
+          },
+          "awayScore": {
+            "type": "integer",
+            "example": 1
+          },
+          "matchDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-11-21T18:00:00Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "Completed",
+            "enum": [
+              "Scheduled",
+              "InProgress",
+              "Completed"
+            ]
+          }
+        }
+      },
+      "CreateMatchRequest": {
+        "required": [
+          "awayScore",
+          "awayTeam",
+          "homeScore",
+          "homeTeam",
+          "matchDate"
+        ],
+        "type": "object",
+        "properties": {
+          "homeTeam": {
+            "type": "string",
+            "example": "Brazil"
+          },
+          "awayTeam": {
+            "type": "string",
+            "example": "Germany"
+          },
+          "homeScore": {
+            "maximum": 99,
+            "minimum": 0,
+            "type": "integer",
+            "example": 2
+          },
+          "awayScore": {
+            "maximum": 99,
+            "minimum": 0,
+            "type": "integer",
+            "example": 1
+          },
+          "matchDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-11-21T18:00:00Z"
+          }
+        }
+      },
+      "TableEntry": {
+        "type": "object",
+        "properties": {
+          "team": {
+            "type": "string",
+            "example": "Brazil"
+          },
+          "played": {
+            "type": "integer",
+            "example": 5
+          },
+          "won": {
+            "type": "integer",
+            "example": 3
+          },
+          "drawn": {
+            "type": "integer",
+            "example": 1
+          },
+          "lost": {
+            "type": "integer",
+            "example": 1
+          },
+          "goalsFor": {
+            "type": "integer",
+            "example": 10
+          },
+          "goalsAgainst": {
+            "type": "integer",
+            "example": 5
+          },
+          "goalDifference": {
+            "type": "integer",
+            "example": 5
+          },
+          "points": {
+            "type": "integer",
+            "example": 10
+          }
+        }
+      },
+      "Lease": {
+        "type": "object",
+        "properties": {
+          "leaseId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "987e6543-e21b-12d3-a456-426614174999"
+          },
+          "tenantName": {
+            "type": "string",
+            "example": "Acme Corp"
+          },
+          "propertyAddress": {
+            "type": "string",
+            "example": "123 Main St, Suite 400, Metropolis"
+          },
+          "leaseStartDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-01-01"
+          },
+          "leaseEndDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-12-31"
+          },
+          "monthlyRent": {
+            "type": "number",
+            "format": "float",
+            "example": 2500
+          },
+          "status": {
+            "type": "string",
+            "example": "Active",
+            "enum": [
+              "Active",
+              "Terminated",
+              "Expired"
+            ]
+          }
+        }
+      },
+      "CreateLeaseRequest": {
+        "required": [
+          "leaseEndDate",
+          "leaseStartDate",
+          "monthlyRent",
+          "propertyAddress",
+          "tenantName"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantName": {
+            "type": "string",
+            "example": "Acme Corp"
+          },
+          "propertyAddress": {
+            "type": "string",
+            "example": "123 Main St, Suite 400, Metropolis"
+          },
+          "leaseStartDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-01-01"
+          },
+          "leaseEndDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-12-31"
+          },
+          "monthlyRent": {
+            "type": "number",
+            "format": "float",
+            "example": 2500
+          }
+        }
+      },
+      "UpdateLeaseRequest": {
+        "type": "object",
+        "properties": {
+          "tenantName": {
+            "type": "string",
+            "example": "Acme Corp"
+          },
+          "propertyAddress": {
+            "type": "string",
+            "example": "123 Main St, Suite 400, Metropolis"
+          },
+          "leaseStartDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-01-01"
+          },
+          "leaseEndDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-12-31"
+          },
+          "monthlyRent": {
+            "type": "number",
+            "format": "float",
+            "example": 2500
+          },
+          "status": {
+            "type": "string",
+            "example": "Active",
+            "enum": [
+              "Active",
+              "Terminated",
+              "Expired"
+            ]
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "An unexpected error occurred."
+          }
+        }
+      },
+      "inline_response_400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid lease data provided"
+          }
+        }
+      },
+      "inline_response_404": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Lease 987e6543-e21b-12d3-a456-426614174999 not found"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}</con:content>
+      <con:type>https://swagger.io/openapiv3/specification</con:type>
+    </con:part>
+  </con:definitionCache>
+  <con:endpoints>
+    <con:endpoint>http://localhost:6200</con:endpoint>
+    <con:endpoint>https://virtserver.swaggerhub.com/domcrosbie-cc0/Severin/1.2</con:endpoint>
+  </con:endpoints>
+  <con:environmentSpec>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:interface>

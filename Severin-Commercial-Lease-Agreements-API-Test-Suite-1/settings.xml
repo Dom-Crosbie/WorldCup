@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="98b10a35-4d78-4ef4-87ba-3cf032584f30" name="Severin Commercial Lease Agreements API Test Suite 1">
+  <con:description>The test suite generated for the REST service [Severin Commercial Lease Agreements API]</con:description>
+  <con:settings id="90044a6f-b393-4a2a-a301-b59ab76bd763">
+    <con:setting id="98b10a35-4d78-4ef4-87ba-3cf032584f30fileName">Severin-Commercial-Lease-Agreements-API-Test-Suite-1</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

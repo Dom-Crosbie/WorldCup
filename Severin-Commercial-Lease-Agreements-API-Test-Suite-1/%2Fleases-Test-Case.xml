@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="733d3bbb-532b-47c9-9b17-c8aca66455fb" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="/leases Test Case" searchProperties="true" timeout="0">
+  <con:description>The test case generated for the REST resource [/leases] located at [/leases]</con:description>
+  <con:settings>
+    <con:setting id="733d3bbb-532b-47c9-9b17-c8aca66455fbfileName">%2Fleases-Test-Case</con:setting>
+  </con:settings>
+  <con:testStep type="datasource" name="Data Source" id="63c604ee-3033-4c1b-86a5-75d76a188767">
+    <con:settings>
+      <con:setting id="com.eviware.soapui.impl.wsdl.teststeps.datasource.DataSourceContainer@prepared-properties">&lt;xml-fragment/></con:setting>
+    </con:settings>
+    <con:config xsi:type="con:DataSourceStep">
+      <con:dataSource type="JDBC">
+        <con:configuration>
+          <driver/>
+          <connstr/>
+          <pass/>
+          <Connection>&lt;None></Connection>
+          <query/>
+          <fetchSize/>
+          <stored-procedure>false</stored-procedure>
+        </con:configuration>
+      </con:dataSource>
+      <con:shared>true</con:shared>
+      <con:restartShared>true</con:restartShared>
+      <con:property>Form editor is not applicable for this request</con:property>
+      <con:restartOnRun>true</con:restartOnRun>
+      <con:stopDatasourceExhausted>false</con:stopDatasourceExhausted>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 1" id="9480a9a4-31b3-4f16-b7ed-38529d9049b9">
+    <con:settings/>
+    <con:config service="Severin Commercial Lease Agreements API" resourcePath="/leases" methodName="getAllLeases" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1" id="79e45a0c-5edf-4d21-aae3-c800dda67e00" mediaType="application/json">
+        <con:settings/>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Request 1 2" id="e8bfafdb-cfc4-496a-8f9c-a1e08341e014">
+    <con:settings/>
+    <con:config service="Severin Commercial Lease Agreements API" resourcePath="/leases" methodName="createLease" xsi:type="con:RestRequestStep">
+      <con:restRequest name="Request 1 2" id="9149a278-d800-465d-bdfe-b5ce09df9d5c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:6200</con:endpoint>
+        <con:request>{\r
+  "tenantName" : "Acme Corp",\r
+  "propertyAddress" : "123 Main St, Suite 400, Metropolis",\r
+  "leaseStartDate" : "2024-01-01",\r
+  "leaseEndDate" : "2026-12-31",\r
+  "monthlyRent" : 2500.0\r
+}</con:request>
+        <con:originalUri>http://localhost/leases</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasourceloop" name="Data Source Loop" id="14604ae8-1e7f-4fff-a5be-837d5cf70ad5">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>Data Source</dataSourceStep>
+      <targetStep>Request 1</targetStep>
+      <discardResults>true</discardResults>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

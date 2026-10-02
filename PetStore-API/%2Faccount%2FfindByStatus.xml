@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/account/findByStatus" path="/account/findByStatus" id="070c0923-533c-41e8-a50e-9ae482c30fb8">
+  <con:settings>
+    <con:setting id="070c0923-533c-41e8-a50e-9ae482c30fb8fileName">%2Faccount%2FfindByStatus</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="findAccountsByStatus" id="b8237977-819f-40eb-aa7e-20259b02119c" method="GET">
+    <con:description>Multiple status values can be provided with comma separated strings</con:description>
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="true">
+        <con:name>status</con:name>
+        <con:style>QUERY</con:style>
+        <con:description>Status values that need to be considered for filter</con:description>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>successful operation</con:description>
+      <con:sampleContent>[ {
+  "id" : 0,
+  "accountType" : {
+    "id" : 0,
+    "name" : "string"
+  },
+  "name" : "Joe Bloggs",
+  "photoUrls" : [ "string" ],
+  "tags" : [ {
+    "id" : 0,
+    "name" : "string"
+  } ],
+  "status" : "open"
+} ]</con:sampleContent>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/xml</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:description>successful operation</con:description>
+      <con:sampleContent><![CDATA[<Account>
+   <id>0</id>
+   <AccountType>
+      <id>0</id>
+      <name>string</name>
+   </AccountType>
+   <name>Joe Bloggs</name>
+   <photoUrl>
+      <photoUrl>string</photoUrl>
+   </photoUrl>
+   <tag>
+      <Tag>
+         <id>0</id>
+         <name>string</name>
+      </Tag>
+   </tag>
+   <status>open</status>
+</Account>]]></con:sampleContent>
+    </con:representation>
+    <con:request name="Request 1" id="30cd59da-a3c6-416f-ba28-f980d045cd47" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://virtserver.swaggerhub.com/API_Design_AM/FinTechAPI/1.0.0</con:endpoint>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+        <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+    <con:environmentSpec>
+      <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+      <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:method>
+  <con:environmentSpec>
+    <con:entry environmentId="966911a6-b49b-45df-bcdc-9c4b564e8db8">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+    <con:entry environmentId="f14d57aa-27b4-4a08-a709-0079df231760">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:resource>
